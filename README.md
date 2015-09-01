@@ -44,3 +44,4 @@ apreciables.
 
 ## TODO List
  * Aunque las vistas están preparadas para ser accedidas vía AJAX, no hay interfaz javascript programada.
+ * Incluir opción que permita ejecutar sin base de datos (ni creación, ni acceso, ni almacenamiento)
