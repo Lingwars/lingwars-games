@@ -1,0 +1,34 @@
+{% extends 'game/base.html' %}
+
+{% block content_game %}
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        <h3>{{ question.word }}</h3>
+        <div>
+            {% for ans in question.options %}
+                {% if forloop.first %}<ul>{% endif %}
+                    <li>{{ ans.1 }} <a href="{% url 'answer' answer=forloop.counter %}">Respuesta</a></li>
+                {% if forloop.last %}</ul>{% endif %}
+            {% endfor %}
+        </div>
+        </br>
+        <div>
+            <p>Levels:
+            {% for _ in "xxxxxxxxxx" %}
+                {% if forloop.first %}|{% endif %}
+                {% if level == forloop.counter0 %}
+                    {{ forloop.counter0 }}
+                {% else %}
+                    <a href="{% url 'play_level' level=forloop.counter0 %}">{{ forloop.counter0 }}</a>
+                {% endif %}
+                |
+            {% endfor %}
+            [0-fácil, 9-difícil]</p>
+        </div>
+{% endblock %}
