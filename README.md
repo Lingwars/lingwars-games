@@ -37,3 +37,10 @@ $ python manage.py runserver
 ```
 
 Y ahora ya puedes acceder a [http://localhost:8000/game/0/play/](http://localhost:8000/game/0/play/) y empezar a probarlo ;D
+
+**NOTA.-** En cada llamada se realizan las consultas necesarias a las APIs, esto puede conllevar unos tiempos de espera
+apreciables.
+
+
+## TODO List
+ * Aunque las vistas están preparadas para ser accedidas vía AJAX, no hay interfaz javascript programada.

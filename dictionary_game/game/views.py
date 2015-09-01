@@ -51,6 +51,7 @@ def answer(request, uuid, answer):
 
     options = [opt[0] for opt in data['options']]
     answer_def = Definition.objects.get(word = options[answer_id])
+    question_def = Definition.objects.get(word = data['word'])
 
     if data['answer'] == answer_id:
         data.update({'result': 1})
@@ -58,10 +59,9 @@ def answer(request, uuid, answer):
     else:
         data.update({'result': 0})
         messages.add_message(request, messages.ERROR, 'Ooohhh! You failed')
-    messages.add_message(request, messages.INFO, u"%s: %s" % (answer_def.word, answer_def.definition))
+    messages.add_message(request, messages.INFO, u"%s: %s" % (question_def.word, question_def.definition))
 
     # Store question
-    question_def = Definition.objects.get(word = data['word'])
     instance = Question(query=question_def, answer=answer_def, level=level)
     instance.options = Definition.objects.filter(word__in=options)
     if request.user.is_authenticated():
