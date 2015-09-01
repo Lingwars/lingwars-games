@@ -13,7 +13,7 @@
         <div>
             {% for ans in question.options %}
                 {% if forloop.first %}<ul>{% endif %}
-                    <li>{{ ans.1 }} <a href="{% url 'answer' answer=forloop.counter %}">Respuesta</a></li>
+                    <li>{{ ans.1 }} <a href="{% url 'answer' uuid=id answer=forloop.counter0 %}">Respuesta</a></li>
                 {% if forloop.last %}</ul>{% endif %}
             {% endfor %}
         </div>
