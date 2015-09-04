@@ -1,9 +1,10 @@
 
 from django.views.generic.detail import SingleObjectMixin
-from django.views.generic import DetailView, RedirectView
+from django.views.generic import DetailView, RedirectView, TemplateView
 from django.core.urlresolvers import reverse
+from django.utils import timezone
 
-from engine.models import Game
+from engine.models import Game, PlayerScore
 
 
 class GameMixinView(SingleObjectMixin):
@@ -30,10 +31,22 @@ class GameRankingView(GameMixinView, DetailView):
     template_name = 'engine/game_ranking.html'
 
 
-class GamePlayView(GameMixinView, RedirectView):
+class GamePlayRedirectView(GameMixinView, RedirectView):
     permanent = False
 
     def get_redirect_url(self, *args, **kwargs):
+        # Redirect to play URL inside app
         app_label = self.get_app_label()
         return reverse('%s:play' % app_label)
 
+
+class UserRankingView(TemplateView):
+    queryset = Game.objects.active()
+    template_name = 'engine/user_ranking.html'
+
+    def get_context_data(self, **kwargs):
+        now = timezone.now()
+        now = now.replace(hour=0, minute=0, second=0)
+        data = []
+        for game in self.queryset:
+            scores = PlayerScore.objects.filter()

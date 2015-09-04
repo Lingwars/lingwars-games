@@ -13,7 +13,10 @@
         <div>
             {% for ans in question.options %}
                 {% if forloop.first %}<ul>{% endif %}
-                    <li>{{ ans.1 }} <a href="{% url 'word2def:answer' uuid=id answer=forloop.counter0 %}">Respuesta</a></li>
+                    <form id="answer-{{ forloop.counter0 }}" method="POST" action="{% url 'word2def:answer' uuid=id %}">{% csrf_token %}
+                        <li>{{ ans.1 }} <a href="#" onclick="document.getElementById('answer-{{ forloop.counter0 }}').submit();">Respuesta</a></li>
+                        <input type="hidden" name="answer" value="{{ forloop.counter0 }}">
+                    </form>
                 {% if forloop.last %}</ul>{% endif %}
             {% endfor %}
         </div>

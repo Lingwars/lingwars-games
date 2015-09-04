@@ -38,7 +38,7 @@ class Player(models.Model):
     last_played = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return u"%s" % self.title
+        return u"%s [%s]" % (self.user, self.game)
 
     def touch(self, commit=True):
         self.last_played = timezone.now()
@@ -53,8 +53,5 @@ class PlayerScore(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return u"%s" % self.title
+        return u"%s" % self.player
 
-    def save(self, *args, **kwargs):
-        super(PlayerScore, self).save(*args, **kwargs)
-        self.player.touch()

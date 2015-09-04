@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.conf import settings
 from django.http import JsonResponse
 from django.core.urlresolvers import reverse
+from django.views.generic import TemplateView
 
 from .utils import Game
 from .models import Question, Definition
@@ -13,41 +14,41 @@ ACCESS_TOKEN_IO = getattr(settings, 'ACCESS_TOKEN_IO')
 ACCESS_TOKEN_STORE = getattr(settings, 'ACCESS_TOKEN_STORE')
 
 
-def question(request, level=2):
-    level = int(level)
-    game = Game(ACCESS_TOKEN_IO, ACCESS_TOKEN_STORE)
-    if settings.DEBUG and Definition.objects.filter(level=level).count()>100:
-        words = Definition.objects.order_by('?').values_list('word', 'definition')
-    else:
-        words = game.lookup_words(level, n=4)
-    question = game.random_question(words, n_options=4)
-    # Save to session
-    request.session['level'] = level
-    unique = str(uuid.uuid4())
-    request.session[unique] = question
+class QuestionView(TemplateView):
+    template_name = 'word2def/game_play.html'
 
-    # Store data
-    #Definition.objects.bulk_create([Definition(word=w[0], definition=w[1]) for w in words])
-    for w in words:
-        Definition.objects.get_or_create(word=w[0], defaults={'definition': w[1], 'level': level})
+    def get_context_data(self, *args, **kwargs):
+        level = 2  # TODO: Allow user to select level
+        game = Game(ACCESS_TOKEN_IO, ACCESS_TOKEN_STORE)
+        if settings.DEBUG and Definition.objects.filter(level=level).count()>100:
+            words = Definition.objects.order_by('?').values_list('word', 'definition')
+        else:
+            words = game.lookup_words(level, n=4)
+        question = game.random_question(words, n_options=4)
+        # Save to session
+        self.request.session['level'] = level
+        unique = str(uuid.uuid4())
+        self.request.session[unique] = question
 
-    context = {'question': question, 'level': level, 'id': unique}
+        # Store data
+        #Definition.objects.bulk_create([Definition(word=w[0], definition=w[1]) for w in words])
+        for w in words:
+            Definition.objects.get_or_create(word=w[0], defaults={'definition': w[1], 'level': level})
 
-    if request.is_ajax():
-        return JsonResponse(context)
+        context = super(QuestionView, self).get_context_data(*args, **kwargs)
+        context.update({'question': question, 'level': level, 'id': unique})
+        return context
 
-    return render(request, 'word2def/game_play.html', context=context)
 
-
-def answer(request, uuid, answer):
+def answer(request, uuid):
     if not request.session.get(uuid, False):
         messages.add_message(request, messages.ERROR, 'There has been a problem with the previous question :/')
-        return redirect('play_level', level=0)
+        return redirect('word2def:play')
 
     data = request.session[uuid]
     del request.session[uuid]
     level = request.session['level']
-    answer_id = int(answer)
+    answer_id = int(request.POST['answer'])
 
     options = [opt[0] for opt in data['options']]
     answer_def = Definition.objects.get(word = options[answer_id])
