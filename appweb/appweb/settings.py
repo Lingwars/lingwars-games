@@ -131,3 +131,6 @@ LOGGING = {
         },
     },
 }
+
+
+from .secret import *

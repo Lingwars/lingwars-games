@@ -2,9 +2,11 @@
 # -*- coding: utf-8 -*-
 
 from django.conf.urls import include, url
-from django.views.generic import TemplateView
+from .views import question, answer
+
 
 urlpatterns = [
-    url(r'^play/$', TemplateView.as_view(template_name='word2def/game_play.html'), name='play'),
+    url(r'^play/$', question, name='play'),
+    url(r'^answer/(?P<uuid>[a-z0-9-]+)/(?P<answer>\d{1})/$', answer, name='answer'),
 ]
 
