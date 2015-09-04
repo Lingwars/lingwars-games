@@ -16,7 +16,7 @@ class GameConfig(AppConfig):
         self.game.save()
 
     def get_player(self, user):
-        if user.is_authenticated():
+        if user and user.is_authenticated():
             obj, created = Player.objects.get_or_create(user=user, game__name=self.game.name, defaults={'game': self.game})
             return obj
         return None

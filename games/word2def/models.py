@@ -59,7 +59,8 @@ from django.apps import apps
 def log_player_score(instance, **kwargs):
     word2def = apps.get_app_config('word2def')
     player = word2def.get_player(instance.user)
-    score = 1 if instance.correct else 0
-    PlayerScore.objects.create(player=player, score=score)
-    player.touch()
+    if player:
+        score = 1 if instance.correct else 0
+        PlayerScore.objects.create(player=player, score=score)
+        player.touch()
 post_save.connect(log_player_score, sender=Question)
