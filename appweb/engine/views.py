@@ -1,10 +1,12 @@
+from __future__ import division
 
 from django.views.generic.detail import SingleObjectMixin
 from django.views.generic import DetailView, RedirectView, TemplateView
 from django.core.urlresolvers import reverse
 from django.utils import timezone
+from django.db.models import Sum, Count, F, FloatField
 
-from engine.models import Game, PlayerScore
+from engine.models import Game, PlayerScore, Player
 
 
 class GameMixinView(SingleObjectMixin):
@@ -49,4 +51,10 @@ class UserRankingView(TemplateView):
         now = now.replace(hour=0, minute=0, second=0)
         data = []
         for game in self.queryset:
-            scores = PlayerScore.objects.filter()
+            players = Player.objects.filter(game=game).annotate(sum=Sum('playerscore__score'), count=Count('playerscore')).annotate(score=F('sum')/F('count'))
+            scores = PlayerScore.objects.filter(player__game=game)
+            data.append((game, players))
+
+        context = super(UserRankingView, self).get_context_data(**kwargs)
+        context.update({'data': data})
+        return context
