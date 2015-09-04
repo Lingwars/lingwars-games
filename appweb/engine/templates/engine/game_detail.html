@@ -1,0 +1,10 @@
+{% extends "engine/base.html" %}
+
+{% block content_engine %}
+        <h2>{{ game.title }}</h2>
+        <div>
+            {% block content_game %}
+                <p>Game details...</p>
+            {% endblock %}
+        </div>
+{% endblock %}
