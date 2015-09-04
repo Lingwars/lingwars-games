@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from django.apps import AppConfig, apps
-from engine.models import Game, Player
+from engine.models import Game, Player, PlayerScore
 
 import logging
 log = logging.getLogger(__name__)
@@ -20,6 +20,12 @@ class GameConfig(AppConfig):
             obj, created = Player.objects.get_or_create(user=user, game__name=self.game.name, defaults={'game': self.game})
             return obj
         return None
+
+    def score(self, user, score):
+        player = self.get_player(user)
+        if player:
+            PlayerScore.objects.create(player=player, score=score)
+            player.touch()
 
 
 def register_games():

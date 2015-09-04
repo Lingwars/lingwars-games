@@ -6,8 +6,9 @@ from django.conf import settings
 from django.http import JsonResponse
 from django.core.urlresolvers import reverse
 from django.views.generic import TemplateView
+from django.apps import apps
 
-from .utils import Game
+from .game import Game
 from .models import Question, Definition
 
 ACCESS_TOKEN_IO = getattr(settings, 'ACCESS_TOKEN_IO')
@@ -16,62 +17,37 @@ ACCESS_TOKEN_STORE = getattr(settings, 'ACCESS_TOKEN_STORE')
 
 class QuestionView(TemplateView):
     template_name = 'word2def/game_play.html'
+    game = Game(ACCESS_TOKEN_IO, ACCESS_TOKEN_STORE)
+    app = apps.get_app_config('word2def')
 
     def get_context_data(self, *args, **kwargs):
         level = 2  # TODO: Allow user to select level
-        game = Game(ACCESS_TOKEN_IO, ACCESS_TOKEN_STORE)
-        if settings.DEBUG and Definition.objects.filter(level=level).count()>100:
-            words = Definition.objects.order_by('?').values_list('word', 'definition')
-        else:
-            words = game.lookup_words(level, n=4)
-        question = game.random_question(words, n_options=4)
-        # Save to session
-        self.request.session['level'] = level
+        question, response = self.game.make_question(level=level, n_options=4)
         unique = str(uuid.uuid4())
-        self.request.session[unique] = question
-
-        # Store data
-        #Definition.objects.bulk_create([Definition(word=w[0], definition=w[1]) for w in words])
-        for w in words:
-            Definition.objects.get_or_create(word=w[0], defaults={'definition': w[1], 'level': level})
+        self.request.session[unique] = {'question': question, 'response': response}
 
         context = super(QuestionView, self).get_context_data(*args, **kwargs)
         context.update({'question': question, 'level': level, 'id': unique})
         return context
 
+    def post(self, request, *args, **kwargs):
+        uuid = self.kwargs['uuid']
+        if not request.session.get(uuid, False):
+            messages.add_message(request, messages.ERROR, u"Invalid answer identifier")
+            return self.get(request, *args, **kwargs)
 
-def answer(request, uuid):
-    if not request.session.get(uuid, False):
-        messages.add_message(request, messages.ERROR, 'There has been a problem with the previous question :/')
-        return redirect('word2def:play')
+        data = request.session[uuid]
+        score = self.game.score(data['response'], request.POST)
+        if score > 0:
+            messages.add_message(request, messages.SUCCESS, 'Well done!')
+        else:
+            messages.add_message(request, messages.SUCCESS, 'Oooohhh! You failed')
 
-    data = request.session[uuid]
-    del request.session[uuid]
-    level = request.session['level']
-    answer_id = int(request.POST['answer'])
+        query = data['question']['query']
+        answer = data['question']['options'][data['response']['answer']][1]
+        messages.add_message(request, messages.INFO, u"%s: %s" % (query, answer))
 
-    options = [opt[0] for opt in data['options']]
-    answer_def = Definition.objects.get(word = options[answer_id])
-    question_def = Definition.objects.get(word = data['word'])
+        self.app.score(request.user, score)
 
-    if data['answer'] == answer_id:
-        data.update({'result': 1})
-        messages.add_message(request, messages.SUCCESS, 'Well done!')
-    else:
-        data.update({'result': 0})
-        messages.add_message(request, messages.ERROR, 'Ooohhh! You failed')
-    messages.add_message(request, messages.INFO, u"%s: %s" % (question_def.word, question_def.definition))
-
-    # Store question
-    instance = Question(query=question_def, answer=answer_def, level=level)
-    instance.options = Definition.objects.filter(word__in=options)
-    if request.user.is_authenticated():
-        instance.user = request.user
-    instance.save()
-
-    redirect_url = reverse('word2def:play')
-
-    if request.is_ajax():
-        return JsonResponse(data.update({'redirect_to': redirect_url}))
-
-    return redirect(redirect_url)
+        redirect_url = reverse('word2def:play')
+        return redirect(redirect_url)

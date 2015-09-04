@@ -13,6 +13,27 @@ class Game(object):
         self.api_io = Apicultur(ACCESS_TOKEN_IO, cfg_data='apicultur.io')
         self.api_store = Apicultur(ACCESS_TOKEN_STORE, cfg_data='store.apicultur.com')
 
+    def make_question(self, level, n_options):
+        words = self.lookup_words(level, n_options)
+        word, options, answer = self.random_question(words, n_options)
+        question = {'query': word, 'options': options}
+        response = {'answer': answer}
+        return question, response
+
+    def score(self, response, user_answer):
+        print("*"*20)
+        print(response)
+        print(user_answer)
+        r = response.get('answer')
+        u = user_answer.get('answer', None)
+        try:
+            u = int(u)
+        except TypeError:
+            return 0
+        else:
+            return 1 if u == response.get('answer') else 0
+
+
     def lookup_words(self, level, n):
         log.debug("Game::lookup_words(level=%d, n=%d)" % (level, n))
         words = []
@@ -35,7 +56,7 @@ class Game(object):
         return words[:n]
 
     @classmethod
-    def random_question(self, words, n_options=4, do_shuffle=False):
+    def random_question(cls, words, n_options=4, do_shuffle=False):
         log.debug("Game::random_question(words=[], n_options=%d, do_shuffle=%s)" % (n_options, do_shuffle))
         if n_options > len(words):
             raise AttributeError('Not enough options to choose')
@@ -49,7 +70,8 @@ class Game(object):
         shuffle(options)
         answer = [y[0] for y in options].index(word)
         # Return
-        return {'word': word, 'options': options, 'answer': answer}
+        return word, options, answer
+
 
     @classmethod
     def user_level(cls, user_input=True):
@@ -59,6 +81,7 @@ class Game(object):
             level = int(nivel)
         return level
 
+
 if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG, format='%(message)s')
     logging.Filter(name='__main__')
@@ -66,7 +89,7 @@ if __name__ == '__main__':
     try:
         from secret import ACCESS_TOKEN_IO, ACCESS_TOKEN_STORE
     except ImportError:
-        from dictionary_game.secret import ACCESS_TOKEN_IO, ACCESS_TOKEN_STORE
+        from appweb.secret import ACCESS_TOKEN_IO, ACCESS_TOKEN_STORE
 
     print("================")
     print("= Definiciones =")
