@@ -9,7 +9,11 @@ log = logging.getLogger(__name__)
 
 
 class GameConfig(AppConfig):
-    pass
+    def register(self):
+        obj, created = Game.objects.get_or_create(name=self.name)
+        obj.title = self.verbose_name
+        obj.available = True
+        obj.save()
 
 
 def register_games():
@@ -17,8 +21,5 @@ def register_games():
     Game.objects.all().update(available=False)
     for app in apps.get_app_configs():
         if isinstance(app, GameConfig):
-            obj, created = Game.objects.get_or_create(name=app.name)
-            obj.title = app.verbose_name
-            obj.available = True
-            obj.save()
             log.info(u"\t - %s" % app.verbose_name)
+            app.register()

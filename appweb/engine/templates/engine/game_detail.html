@@ -4,7 +4,12 @@
         <h2>{{ game.title }}</h2>
         <div>
             {% block content_game %}
-                <p>Game details...</p>
+                <p>Game details (default in 'engine/game_detail.html')...</p>
             {% endblock %}
         </div>
+        <p>
+            <a href="{% url 'game_detail' game.id %}">details</a> |
+            <a href="{% url 'game_play' game.id %}">play</a> |
+            <a href="{% url 'game_ranking' game.id %}">ranking</a>
+        </p>
 {% endblock %}

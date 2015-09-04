@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+        <a href="{% url 'game_list' %}">Games</a> |
         {% block content_engine %}
         {% endblock %}
 {% endblock %}
