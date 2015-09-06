@@ -4,9 +4,9 @@ from engine.models import Game, Player, PlayerScore
 
 
 class GameAdmin(admin.ModelAdmin):
-    list_display = ('name', 'title', 'available', 'active',)
-    readonly_fields = ('name', 'available',)
-    list_filter = ('available', 'active',)
+    list_display = ('title', 'available', 'active', 'is_app',)
+    readonly_fields = ('name', 'available', 'is_app',)
+    list_filter = ('available', 'active', 'is_app',)
     search_fields = ('title',)
 
 class PlayerScoreAdmin(admin.ModelAdmin):

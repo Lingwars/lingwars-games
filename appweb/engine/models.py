@@ -8,7 +8,7 @@ from django.utils import timezone
 
 class GameManager(models.Manager):
     def active(self):
-        return self.filter(active=True)
+        return self.filter(available=True, active=True)
 
 
 @python_2_unicode_compatible
@@ -17,6 +17,7 @@ class Game(models.Model):
     title = models.CharField(max_length=128)
     available = models.BooleanField(default=True)
     active = models.BooleanField(default=True)
+    is_app = models.BooleanField()
 
     date_added = models.DateTimeField(auto_now_add=True)
 
