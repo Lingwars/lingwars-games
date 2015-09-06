@@ -9,28 +9,25 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
 from ..models import Player, PlayerScore, Game
-from django.utils.module_loading import import_string
+
 
 
 class GameMixinView(object):
     games_qs = Game.objects.active()
 
     @property
+    def object(self):
+        if not hasattr(self, '_object'):
+            self._object = self.games_qs.get(pk=self.kwargs['pk'])
+        return self._object
+
+    @property
     def app(self):
-        if not hasattr(self, '_app'):
-            self._app = self.games_qs.get(pk=self.kwargs['game_pk'])
-        return self._app
+        return self.object.get_app_config()
 
     @property
     def game(self):
-        if not hasattr(self, '_game'):
-            module = self.app.name
-            GameClass = import_string(module)
-            self._game = GameClass()
-        return self._game
-
-    def get_app_label(self):
-        return self.app.get_namespace()
+        return self.object.get_game()
 
 
 class QuestionView(GameMixinView, TemplateView):

@@ -29,8 +29,10 @@ class GameConfig(AppConfig):
         return '%s.game.Game' % self.name
 
     def register(self):
-        if is_game(self.get_module()):
-            self.game, created = Game.objects.get_or_create(name=self.get_module(), defaults={'is_app': True})
+        module = self.get_module()
+        id = self.name.split('.')[-1]
+        if is_game(module):
+            self.game, created = Game.objects.get_or_create(id=id, defaults={'is_app': True, 'module': module})
             self.game.title = self.verbose_name
             self.game.available = True
             self.game.is_app = True
@@ -52,12 +54,15 @@ class GameConfig(AppConfig):
 def register_games():
     log.info("Available games:")
     Game.objects.all().update(available=False, is_app=False)
+
     # Registered apps
     for app in apps.get_app_configs():
         if isinstance(app, GameConfig):
             log.info(u"\t - %s" % app.verbose_name)
             app.register()
+
     # TODO: Not registered apps (found by directory)
+    #   -- do I want to consider these?
 
     # TODO: Simple games, just a 'game.py' file inside dir
     # dir = settings.get('GAME_DIRS', [])
