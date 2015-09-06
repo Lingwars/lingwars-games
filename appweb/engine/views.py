@@ -72,7 +72,7 @@ class UserRankingView(TemplateView):
 
 
 class GamePlayView(QuestionView):
-    template_name = 'engine/game_play.html'
+    template_name = 'engine/game_play_%s.html'
 
     def get(self, request, *args, **kwargs):
         if self.app.is_app:
@@ -81,6 +81,13 @@ class GamePlayView(QuestionView):
             return redirect(reverse('%s:play' % app_label))
         else:
             return super(GamePlayView, self).get(request, *args, **kwargs)
+
+    def get_template_names(self):
+        if 'options' in self.question:
+            return [self.template_name % 'options']
+        elif 'yesno' in self.question:
+            return [self.template_name % 'yesno']
+        return []
 
     def get_context_data(self, **kwargs):
         answer_url = reverse('game_answer', kwargs={'game_pk': self.app.pk, 'uuid': self.uuid})

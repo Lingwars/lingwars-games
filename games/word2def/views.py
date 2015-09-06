@@ -1,11 +1,5 @@
 
-import uuid
-from django.shortcuts import render, redirect
-from django.contrib import messages
 from django.conf import settings
-from django.http import JsonResponse
-from django.core.urlresolvers import reverse
-from django.views.generic import TemplateView
 from django.apps import apps
 
 from engine.utils.views import QuestionView
@@ -25,3 +19,10 @@ class Word2DefQuestionView(QuestionView):
         app = apps.get_app_config('word2def')
         self._app = self.games_qs.get(name=app.get_module())
         self._game = Game(ACCESS_TOKEN_IO, ACCESS_TOKEN_STORE)
+
+    def score(self, response, user_answer):
+        score = super(Word2DefQuestionView, self).score(response, user_answer)
+
+        # Store data associated to 'self.question', 'response' and 'user_answer'
+
+        return score
