@@ -2,11 +2,11 @@
 # -*- coding: utf-8 -*-
 
 from django.conf.urls import include, url
-from .views import QuestionView
+from .views import Word2DefQuestionView
 
 
 urlpatterns = [
-    url(r'^play/$', QuestionView.as_view(), name='play'),
-    url(r'^answer/(?P<uuid>[a-z0-9-]+)/$', QuestionView.as_view(), name='answer'),
+    url(r'^play/$', Word2DefQuestionView.as_view(), name='play'),
+    url(r'^answer/(?P<uuid>[a-z0-9-]+)/$', Word2DefQuestionView.as_view(), name='answer'),
 ]
 

@@ -8,10 +8,32 @@ from django.views.generic import TemplateView
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
-from ..models import Player, PlayerScore
+from ..models import Player, PlayerScore, Game
+from django.utils.module_loading import import_string
 
 
-class QuestionView(TemplateView):
+class GameMixinView(object):
+    games_qs = Game.objects.active()
+
+    @property
+    def app(self):
+        if not hasattr(self, '_app'):
+            self._app = self.games_qs.get(pk=self.kwargs['game_pk'])
+        return self._app
+
+    @property
+    def game(self):
+        if not hasattr(self, '_game'):
+            module = self.app.name
+            GameClass = import_string(module)
+            self._game = GameClass()
+        return self._game
+
+    def get_app_label(self):
+        return self.app.get_namespace()
+
+
+class QuestionView(GameMixinView, TemplateView):
 
     @property
     def uuid(self):

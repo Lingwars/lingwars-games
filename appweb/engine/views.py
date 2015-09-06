@@ -7,29 +7,10 @@ from django.core.urlresolvers import reverse
 from django.utils import timezone
 from django.db.models import Sum, Count, F, FloatField
 from django.shortcuts import redirect
-from django.utils.module_loading import import_string
+
 
 from .models import Game, PlayerScore, Player
-from .utils.views import QuestionView
-
-
-class GameMixinView(object):
-    @property
-    def app(self):
-        if not hasattr(self, '_app'):
-            self._app = Game.objects.active().get(pk=self.kwargs['game_pk'])
-        return self._app
-
-    @property
-    def game(self):
-        if not hasattr(self, '_game'):
-            module = self.app.name
-            GameClass = import_string(module)
-            self._game = GameClass()
-        return self._game
-
-    def get_app_label(self):
-        return self.app.get_namespace()
+from .utils.views import QuestionView, GameMixinView
 
 
 class GameDetailView(GameMixinView, DetailView):
@@ -79,8 +60,7 @@ class UserRankingView(TemplateView):
     template_name = 'engine/user_ranking.html'
 
     def get_context_data(self, **kwargs):
-        now = timezone.now()
-        now = now.replace(hour=0, minute=0, second=0)
+        now = timezone.now().replace(hour=0, minute=0, second=0)
         data = []
         for game in self.queryset:
             players = Player.objects.filter(game=game).annotate(sum=Sum('playerscore__score'), count=CountAsFloat('playerscore')).annotate(score=F('sum')/F('count')).order_by('-score')
@@ -91,8 +71,7 @@ class UserRankingView(TemplateView):
         return context
 
 
-
-class GamePlayView(GameMixinView, QuestionView):
+class GamePlayView(QuestionView):
     template_name = 'engine/game_play.html'
 
     def get(self, request, *args, **kwargs):
