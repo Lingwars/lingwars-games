@@ -47,11 +47,11 @@ class QuestionView(GameMixinView, TemplateView):
 
     def get_context_data(self, *args, **kwargs):
         level = 2  # TODO: Allow user to select level
-        self.question, response = self.game.make_question(level=level, n_options=4)
-        self.request.session[self.uuid] = {'question': self.question, 'response': response}
+        question, response = self.game.make_question(level=level, n_options=4)
+        self.request.session[self.uuid] = {'question': question, 'response': response}
 
         context = super(QuestionView, self).get_context_data(*args, **kwargs)
-        context.update({'question': self.question, 'level': level, 'id': self.uuid})
+        context.update({'question': question, 'level': level, 'id': self.uuid})
         return context
 
     def post(self, request, *args, **kwargs):

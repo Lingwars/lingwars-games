@@ -64,7 +64,6 @@ def register_games():
     base_dir = getattr(settings, 'BASE_DIR', '')
     dir = os.path.join(base_dir, '../games')
     # Add to path
-    import sys
     sys.path.append(dir)
     print(u"Look for games at %r" % dir)
     for item in os.listdir(dir):

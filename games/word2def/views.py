@@ -23,6 +23,6 @@ class Word2DefQuestionView(QuestionView):
     def score(self, response, user_answer):
         score = super(Word2DefQuestionView, self).score(response, user_answer)
 
-        # Store data associated to 'self.question', 'response' and 'user_answer'
+        # Store data associated to 'response' and 'user_answer'
 
         return score
