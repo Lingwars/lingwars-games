@@ -37,17 +37,19 @@ class QuestionView(TemplateView):
             return self.get(request, *args, **kwargs)
 
         data = request.session[uuid]
-        score = self.game.score(data['response'], request.POST)
-        if score > 0:
-            messages.add_message(request, messages.SUCCESS, 'Well done!')
-        else:
-            messages.add_message(request, messages.SUCCESS, 'Oooohhh! You failed')
-
-        query = data['question']['query']
-        answer = data['question']['options'][data['response']['answer']][1]
-        messages.add_message(request, messages.INFO, u"%s: %s" % (query, answer))
+        score = self.score(data['response'], request.POST)
 
         self.app.score(request.user, score)
 
         redirect_url = reverse('word2def:play')
         return redirect(redirect_url)
+
+    def score(self, response, user_answer):
+        score = self.game.score(response, user_answer)
+        if score > 0:
+            messages.add_message(self.request, messages.SUCCESS, 'Well done!')
+        else:
+            messages.add_message(self.request, messages.SUCCESS, 'Oooohhh! You failed')
+        print(response)
+        messages.add_message(self.request, messages.INFO, response.get('info', None))
+        return score

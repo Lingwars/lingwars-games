@@ -17,7 +17,7 @@ class Game(object):
         words = self.lookup_words(level, n_options)
         word, options, answer = self.random_question(words, n_options)
         question = {'query': word, 'options': options}
-        response = {'answer': answer}
+        response = {'answer': answer, 'info': u"%s: %s" % (options[answer][0], options[answer][1])}
         return question, response
 
     def score(self, response, user_answer):
@@ -32,7 +32,6 @@ class Game(object):
             return 0
         else:
             return 1 if u == response.get('answer') else 0
-
 
     def lookup_words(self, level, n):
         log.debug("Game::lookup_words(level=%d, n=%d)" % (level, n))
