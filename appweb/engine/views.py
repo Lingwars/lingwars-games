@@ -52,7 +52,6 @@ class UserRankingView(TemplateView):
         data = []
         for game in self.queryset:
             players = Player.objects.filter(game=game).annotate(sum=Sum('playerscore__score'), count=Count('playerscore')).annotate(score=F('sum')/F('count'))
-            scores = PlayerScore.objects.filter(player__game=game)
             data.append((game, players))
 
         context = super(UserRankingView, self).get_context_data(**kwargs)
