@@ -42,6 +42,31 @@ class GamePlayRedirectView(GameMixinView, RedirectView):
         return reverse('%s:play' % app_label)
 
 
+from django.db.models.aggregates import Aggregate, Value
+class CountAsFloat(Aggregate):
+    function = 'COUNT'
+    name = 'Count'
+    template = '%(function)s(%(distinct)s%(expressions)s)'
+
+    def __init__(self, expression, distinct=False, **extra):
+        if expression == '*':
+            expression = Value(expression)
+        super(CountAsFloat, self).__init__(
+            expression, distinct='DISTINCT ' if distinct else '', output_field=FloatField(), **extra)
+
+    def __repr__(self):
+        return "{}({}, distinct={})".format(
+            self.__class__.__name__,
+            self.arg_joiner.join(str(arg) for arg in self.source_expressions),
+            'False' if self.extra['distinct'] == '' else 'True',
+        )
+
+    def convert_value(self, value, expression, connection, context):
+        if value is None:
+            return 0
+        return int(value)
+
+
 class UserRankingView(TemplateView):
     queryset = Game.objects.active()
     template_name = 'engine/user_ranking.html'
@@ -51,7 +76,7 @@ class UserRankingView(TemplateView):
         now = now.replace(hour=0, minute=0, second=0)
         data = []
         for game in self.queryset:
-            players = Player.objects.filter(game=game).annotate(sum=Sum('playerscore__score'), count=Count('playerscore')).annotate(score=F('sum')/F('count'))
+            players = Player.objects.filter(game=game).annotate(sum=Sum('playerscore__score'), count=CountAsFloat('playerscore')).annotate(score=F('sum')/F('count')).order_by('-score')
             data.append((game, players))
 
         context = super(UserRankingView, self).get_context_data(**kwargs)

@@ -2,17 +2,26 @@
 
 {% block content_engine %}
     <h2>Global ranking</h2>
-    <ul>
+
     {% for game,players in data %}
-        <li>
-            {{ game }}
-            <ul>
-                {% for player in players %}
-                    <li>{{ player }}: {{ player.score }} ({{ player.sum }}/{{ player.count }})</li>
-                {% endfor %}
-            </ul>
-        </li>
+        <h3>{{ game }}</h3>
+        <table>
+            <thead>
+                <th>Player</th>
+                <th>Rank</th>
+                <th>Points</th>
+                <th>Rounds</th>
+            </thead>
+            {% for player in players %}
+                <tr>
+                    <td>{{ player.user }}</td>
+                    <td alt="Rank computed: {{ player.score|floatformat:"2" }}">{{ forloop.counter }}</td>
+                    <td>{{ player.sum|floatformat:"2" }}</td>
+                    <td>{{ player.count }}</td>
+                </tr>
+            {% endfor %}
+        </table>
     {% endfor %}
-    </ul>
+
 
 {% endblock %}

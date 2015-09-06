@@ -49,7 +49,7 @@ class Player(models.Model):
 @python_2_unicode_compatible
 class PlayerScore(models.Model):
     player = models.ForeignKey(Player)
-    score = models.PositiveIntegerField(help_text=_(u"Work as 'points'. Based on this the engine will compute rankings"))
+    score = models.FloatField(help_text=_(u"Work as 'points'. Based on this the engine will compute rankings"))
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
