@@ -13,5 +13,5 @@ class GameBase(object):
     def make_question(self, *args, **kwargs):
         raise NotImplementedError()
 
-    def score(self):
+    def score(self, response, user_answer):
         raise NotImplementedError

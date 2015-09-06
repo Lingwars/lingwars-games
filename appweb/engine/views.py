@@ -1,28 +1,41 @@
 from __future__ import division
+from __future__ import absolute_import
 
 from django.views.generic.detail import SingleObjectMixin
 from django.views.generic import DetailView, RedirectView, TemplateView
 from django.core.urlresolvers import reverse
 from django.utils import timezone
 from django.db.models import Sum, Count, F, FloatField
+from django.shortcuts import redirect
+from django.utils.module_loading import import_string
 
-from engine.models import Game, PlayerScore, Player
+from .models import Game, PlayerScore, Player
+from .utils.views import QuestionView
 
 
-class GameMixinView(SingleObjectMixin):
-    #model = Game
-    queryset = Game.objects.active()
+class GameMixinView(object):
+    @property
+    def app(self):
+        if not hasattr(self, '_app'):
+            self._app = Game.objects.active().get(pk=self.kwargs['game_pk'])
+        return self._app
 
-    def get_object(self, queryset=None):
-        if not hasattr(self, '_object'):
-            self._object = super(GameMixinView, self).get_object(queryset)
-        return self._object
+    @property
+    def game(self):
+        if not hasattr(self, '_game'):
+            module = self.app.name
+            GameClass = import_string(module)
+            self._game = GameClass()
+        return self._game
 
     def get_app_label(self):
-        return self.get_object().name.split('.')[-1]
+        return self.app.get_namespace()
 
 
 class GameDetailView(GameMixinView, DetailView):
+
+    def get_object(self, queryset=None):
+        return self.app
 
     def get_template_names(self):
         names = super(GameDetailView, self).get_template_names()
@@ -32,14 +45,8 @@ class GameDetailView(GameMixinView, DetailView):
 class GameRankingView(GameMixinView, DetailView):
     template_name = 'engine/game_ranking.html'
 
-
-class GamePlayRedirectView(GameMixinView, RedirectView):
-    permanent = False
-
-    def get_redirect_url(self, *args, **kwargs):
-        # Redirect to play URL inside app
-        app_label = self.get_app_label()
-        return reverse('%s:play' % app_label)
+    def get_object(self, queryset=None):
+        return self.app
 
 
 from django.db.models.aggregates import Aggregate, Value
@@ -82,3 +89,20 @@ class UserRankingView(TemplateView):
         context = super(UserRankingView, self).get_context_data(**kwargs)
         context.update({'data': data})
         return context
+
+
+
+class GamePlayView(GameMixinView, QuestionView):
+    template_name = 'engine/game_play.html'
+
+    def get(self, request, *args, **kwargs):
+        if self.app.is_app:
+            # Redirect to play URL inside app
+            app_label = self.get_app_label()
+            return redirect(reverse('%s:play' % app_label))
+        else:
+            return super(GamePlayView, self).get(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        answer_url = reverse('game_answer', kwargs={'game_pk': self.app.pk, 'uuid': self.uuid})
+        return super(GamePlayView, self).get_context_data(answer_url=answer_url, game=self.app)

@@ -5,10 +5,13 @@ from builtins import input
 from apicultur import Apicultur
 from random import randint, shuffle
 
+from engine.utils.game import GameBase
+
+
 import logging
 log = logging.getLogger(__name__)
 
-class Game(object):
+class Game(GameBase):
     def __init__(self, ACCESS_TOKEN_IO, ACCESS_TOKEN_STORE):
         self.api_io = Apicultur(ACCESS_TOKEN_IO, cfg_data='apicultur.io')
         self.api_store = Apicultur(ACCESS_TOKEN_STORE, cfg_data='store.apicultur.com')

@@ -20,5 +20,5 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^', include('engine.urls')),
 
-    url(r'^word2def/', include('games.word2def.urls', namespace='word2def'))
+    url(r'^word2def/', include('games.word2def.urls', namespace='word2def'))  # TODO: Auto-add because we need namespace to be that 'id',
 ]

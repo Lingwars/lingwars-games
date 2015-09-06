@@ -26,8 +26,12 @@ class Game(models.Model):
     def __str__(self):
         return u"%s" % self.title
 
+    def get_namespace(self):
+        tokens = self.name.split('.')
+        return tokens[-3]
+
     def get_absolute_url(self):
-        return reverse('game_detail', kwargs={'pk': self.pk})
+        return reverse('game_detail', kwargs={'game_pk': self.pk})
 
 
 @python_2_unicode_compatible

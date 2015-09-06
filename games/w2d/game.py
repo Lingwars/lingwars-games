@@ -1,18 +1,24 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-class Game(object):
-    #template_name = ''
+from engine.utils.game import GameBase
+
+class Game(GameBase):
+    title = 'Word 2 Def (simple)'
 
     def make_question(self, *args, **kwargs):
-        query = {'suma': '2+3'}
-        response = {'suma': 5}
-        return query, response
+        query = '2+3'
+        options = [1, 2, 3, 4, 5]
+
+        question = {'query': query, 'options': options}
+        response = {'answer': options.index(5), 'info': '2+3 = 5'}
+        return question, response
 
     def score(self, response, user_answer):
-        r_suma = response.get('suma')
-        u_suma = user_answer.get('suma', None)
-        if isinstance(u_suma, int) and r_suma == int(u_suma):
-            return 1
-        else:
+        u = user_answer.get('answer', None)
+        try:
+            u = int(u)
+        except TypeError:
             return 0
+        else:
+            return 1 if u == response.get('answer') else 0
