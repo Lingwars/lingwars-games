@@ -2,4 +2,20 @@
 
 {% block content_game %}
     <p>Game ranking: un poco de javascript, grafiquitas y demás.</p>
+    <table>
+        <thead>
+            <th>Player</th>
+            <th>Rank</th>
+            <th>Points</th>
+            <th>Rounds</th>
+        </thead>
+        {% for player in players %}
+            <tr>
+                <td>{{ player.user }}</td>
+                <td alt="Rank computed: {{ player.score|floatformat:"2" }}">{{ forloop.counter }}</td>
+                <td>{{ player.sum|floatformat:"2" }}</td>
+                <td>{{ player.count }}</td>
+            </tr>
+        {% endfor %}
+    </table>
 {% endblock %}

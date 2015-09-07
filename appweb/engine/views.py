@@ -22,6 +22,14 @@ class GameDetailView(GameMixinView, DetailView):
 class GameRankingView(GameMixinView, DetailView):
     template_name = 'engine/game_ranking.html'
 
+    def get_context_data(self, **kwargs):
+        context = super(GameRankingView, self).get_context_data(**kwargs)
+
+        now = timezone.now().replace(hour=0, minute=0, second=0)
+        players = Player.objects.filter(game=self.object.pk).annotate(sum=Sum('playerscore__score'), count=CountAsFloat('playerscore')).annotate(score=F('sum')/F('count')).order_by('-score')
+        context.update({'players': players})
+        return context
+
 
 from django.db.models.aggregates import Aggregate, Value
 class CountAsFloat(Aggregate):
