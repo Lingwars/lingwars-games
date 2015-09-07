@@ -17,12 +17,23 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument('game', help=u'One of these: %s' % ', '.join(self.available_games))
+        parser.add_argument('--rounds',
+                            action='store',
+                            dest='rounds',
+                            default=1,
+                            type=int,
+                            help='Number of rounds to play')
 
     def handle(self, *args, **options):
-        id = options['game']
+        id = options.pop('game')
         if id not in self.available_games:
-            self.stderr.write(u"Invalid game id %r. It must be one of these: %r" % (id, ', '.join(self.available_games)))
+            raise CommandError(u"Invalid game id %r. It must be one of these: %r" % (id, ', '.join(self.available_games)))
+
+        rounds = options.pop('rounds')
 
         game = engine_app.games[id]
-        game.play_interactive()
+        try:
+            game.play_interactive(rounds=rounds, **options)
+        except KeyboardInterrupt:
+            self.stdout.write(u"User interrupt.")
 

@@ -16,7 +16,7 @@ class Game(GameBase):
         self.api_io = Apicultur(ACCESS_TOKEN_IO, cfg_data='apicultur.io')
         self.api_store = Apicultur(ACCESS_TOKEN_STORE, cfg_data='store.apicultur.com')
 
-    def make_question(self, level, n_options):
+    def make_question(self, level, n_options, *args, **kwargs):
         words = self.lookup_words(level, n_options)
         word, options, answer = self.random_question(words, n_options)
         question = {'query': word, 'options': options, 'level':level}
@@ -71,7 +71,6 @@ class Game(GameBase):
         # Return
         return word, options, answer
 
-
     @classmethod
     def user_level(cls, user_input=True):
         level = randint(0, 9)
@@ -80,28 +79,18 @@ class Game(GameBase):
             level = int(nivel)
         return level
 
-    def play_interactive(self):
-        print("================")
-        print("= Definiciones =")
-        print("================")
+    # Functions to play (user_console)
+    def play_config(self):
         level = self.user_level()
-        question, response = self.make_question(level, n_options=4)
+        return {'level': level, 'n_options': 3 }
 
-        print(u"¿Cuál es la definición de...")
-        print(u">> ...'%s'?" % question['query'])
+    def play_options(self, question):
         for i in range(len(question['options'])):
             i += 1
             print(u"\t%d) %s" % (i, question['options'][i-1][1]))
-
-        user_answer = input(u"\nIntroduce el número respuesta: ")
-        user_answer = int(user_answer)-1
-
-        score = self.score(response, {'answer': user_answer})
-        if score >= 0:
-            print("\t¡¡BIEN!! %f points" % score)
-        else:
-            print("\t¡mal!")
-        print(u"\t%s: %s" % question['options'][response['answer']])
+        user_input = input(u"\nIntroduce el número respuesta: ")
+        user_answer = {'answer': int(user_input)-1}
+        return user_answer
 
 
 if __name__ == '__main__':

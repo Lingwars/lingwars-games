@@ -22,6 +22,3 @@ class Game(GameBase):
             return 0
         else:
             return 1 if u == response.get('answer') else 0
-
-    def play_interactive(self):
-        raise NotImplementedError()
