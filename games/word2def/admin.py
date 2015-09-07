@@ -31,7 +31,7 @@ class QuestionCorrectFilter(admin.SimpleListFilter):
 
 
 class QuestionAdmin(admin.ModelAdmin):
-    list_display = ('query', 'level', 'correct',)
+    list_display = ('query', 'user', 'level', 'correct',)
     list_filter = ('level', QuestionCorrectFilter,)
     search_fields = ('query__word',)
 

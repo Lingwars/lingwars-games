@@ -10,7 +10,14 @@ class GameAdmin(admin.ModelAdmin):
     search_fields = ('title',)
 
 class PlayerScoreAdmin(admin.ModelAdmin):
-    list_display = ('player', 'score',)
+    list_display = ('user', 'game', 'score',)
+    list_filter = ('player__game',)
+
+    def user(self, obj):
+        return obj.player.user
+
+    def game(self, obj):
+        return obj.player.game
 
 class PlayerAdmin(admin.ModelAdmin):
     list_display = ('user', 'game',)
