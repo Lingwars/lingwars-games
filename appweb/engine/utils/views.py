@@ -83,8 +83,11 @@ class QuestionView(GameMixinView, TemplateView):
         redirect_url = reverse('game_play', kwargs={'pk': self.object.pk})
         return redirect(redirect_url)
 
+    def get_question_kwargs(self):
+        return {}
+
     def make_question(self):
-        return self.game.make_question()
+        return self.game.make_question(**self.get_question_kwargs())
 
     def score(self, question, response, user_answer):
         score = self.game.score(response, user_answer)

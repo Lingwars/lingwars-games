@@ -18,7 +18,6 @@ class Word2DefQuestionView(QuestionView):
     def make_question(self):
         level = 2  # TODO: Allow user to select level
         question, response = self.game.make_question(level=level, n_options=4)
-        question.update({'level': level, })
 
         # Store data associated to 'response' and 'user_answer'
         for opt in question['options']:
