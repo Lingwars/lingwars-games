@@ -20,6 +20,7 @@ class Word2DefQuestionView(QuestionView):
         question, response = self.game.make_question(level=level, n_options=4)
 
         # Store data associated to 'response' and 'user_answer'
+        defs = [Definition(word=opt[0], definition=opt[1], level=level) for opt in question['options']]
         for opt in question['options']:
             Definition.objects.get_or_create(word=opt[0], defaults={'definition': opt[1], 'level': level})
 

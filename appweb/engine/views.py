@@ -6,7 +6,8 @@ from django.core.urlresolvers import reverse
 from django.utils import timezone
 from django.db.models import Sum, F, FloatField
 from django.shortcuts import redirect
-
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 from .models import Game, Player
 from .utils.views import QuestionView, GameMixinView
@@ -26,7 +27,7 @@ class GameRankingView(GameMixinView, DetailView):
         context = super(GameRankingView, self).get_context_data(**kwargs)
 
         now = timezone.now().replace(hour=0, minute=0, second=0)
-        players = Player.objects.filter(game=self.object.pk).annotate(sum=Sum('playerscore__score'), count=CountAsFloat('playerscore')).annotate(score=F('sum')/F('count')).order_by('-score')
+        players = Player.objects.filter(game=self.object.pk).annotate(sum=Sum('playerscore__score'), count=CountAsFloat('playerscore')).annotate(score=F('sum')/F('count')).order_by('-score', '-count')
         context.update({'players': players})
         return context
 
@@ -62,15 +63,10 @@ class UserRankingView(TemplateView):
 
     def get_context_data(self, **kwargs):
         now = timezone.now().replace(hour=0, minute=0, second=0)
-        data = []
-        for game in self.queryset:
-            players = Player.objects.filter(game=game).annotate(sum=Sum('playerscore__score'), count=CountAsFloat('playerscore')).annotate(score=F('sum')/F('count')).order_by('-score')
-            data.append((game, players))
-
+        users = User.objects.annotate(sum=Sum('player__playerscore__score'), count=CountAsFloat('player__playerscore')).annotate(score=F('sum')/F('count')).filter(count__gt=0).order_by('-score', '-count')
         context = super(UserRankingView, self).get_context_data(**kwargs)
-        context.update({'data': data})
+        context.update({'users': users})
         return context
-
 
 class GamePlayView(QuestionView):
     template_name = 'engine/game_play.html'

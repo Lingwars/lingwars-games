@@ -8,13 +8,15 @@
             <th>Rank</th>
             <th>Points</th>
             <th>Rounds</th>
+            <th>Score</th>
         </thead>
         {% for player in players %}
             <tr>
                 <td>{{ player.user }}</td>
-                <td alt="Rank computed: {{ player.score|floatformat:"2" }}">{{ forloop.counter }}</td>
+                <td>{{ forloop.counter }}</td>
                 <td>{{ player.sum|floatformat:"2" }}</td>
                 <td>{{ player.count }}</td>
+                <td>{{ player.score|floatformat:"2" }}</td>
             </tr>
         {% endfor %}
     </table>
