@@ -15,14 +15,22 @@ class Word2DefQuestionView(QuestionView):
     def get_object(self, pk=None):
         return super(Word2DefQuestionView, self).get_object(pk='word2def')
 
+    def make_question(self):
+        level = 2  # TODO: Allow user to select level
+        question, response = self.game.make_question(level=level, n_options=4)
+        question.update({'level': level, })
+
+        # Store data associated to 'response' and 'user_answer'
+        for opt in question['options']:
+            Definition.objects.get_or_create(word=opt[0], defaults={'definition': opt[1], 'level': level})
+
+        return question, response
+
     def score(self, question, response, user_answer):
         score = super(Word2DefQuestionView, self).score(question, response, user_answer)
 
         # Store data associated to 'response' and 'user_answer'
-        def_options = []
-        for opt in question['options']:
-            instance, created = Definition.objects.get_or_create(word=opt[0], defaults={'definition': opt[1], 'level': question['level']})
-            def_options.append(instance)
+        def_options = Definition.objects.filter(word__in=[it[0] for it in question['options']])
 
         r = response.get('answer')
         u = user_answer.get('answer', None)

@@ -51,13 +51,12 @@ class QuestionView(GameMixinView, TemplateView):
             return None
 
     def get_context_data(self, *args, **kwargs):
-        level = 2  # TODO: Allow user to select level
-        question, response = self.game.make_question(level=level, n_options=4)
+        question, response = self.make_question()
         question.update({'answer_template': self.get_answer_template(question)})
         self.request.session[self.uuid] = {'question': question, 'response': response}
 
         context = super(QuestionView, self).get_context_data(*args, **kwargs)
-        context.update({'question': question, 'level': level, 'id': self.uuid})
+        context.update({'question': question, 'id': self.uuid})
         return context
 
     def get(self, request, *args, **kwargs):
@@ -83,6 +82,9 @@ class QuestionView(GameMixinView, TemplateView):
 
         redirect_url = reverse('game_play', kwargs={'pk': self.object.pk})
         return redirect(redirect_url)
+
+    def make_question(self):
+        return self.game.make_question()
 
     def score(self, question, response, user_answer):
         score = self.game.score(response, user_answer)
