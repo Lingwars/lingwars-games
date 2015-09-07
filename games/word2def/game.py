@@ -80,6 +80,29 @@ class Game(GameBase):
             level = int(nivel)
         return level
 
+    def play_interactive(self):
+        print("================")
+        print("= Definiciones =")
+        print("================")
+        level = self.user_level()
+        question, response = self.make_question(level, n_options=4)
+
+        print(u"¿Cuál es la definición de...")
+        print(u">> ...'%s'?" % question['query'])
+        for i in range(len(question['options'])):
+            i += 1
+            print(u"\t%d) %s" % (i, question['options'][i-1][1]))
+
+        user_answer = input(u"\nIntroduce el número respuesta: ")
+        user_answer = int(user_answer)-1
+
+        score = self.score(response, {'answer': user_answer})
+        if score >= 0:
+            print("\t¡¡BIEN!! %f points" % score)
+        else:
+            print("\t¡mal!")
+        print(u"\t%s: %s" % question['options'][response['answer']])
+
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG, format='%(message)s')
@@ -90,28 +113,5 @@ if __name__ == '__main__':
     except ImportError:
         from appweb.secret import ACCESS_TOKEN_IO, ACCESS_TOKEN_STORE
 
-    print("================")
-    print("= Definiciones =")
-    print("================")
-
     game = Game(ACCESS_TOKEN_IO, ACCESS_TOKEN_STORE)
-    level = game.user_level()
-    print(u"Buscando palabras...")
-    words = game.lookup_words(level, n=10)
-    print(u"Eligiendo pregunta...")
-    question = game.random_question(words)
-
-    print(u"¿Cuál es la definición de...")
-    print(u">> ...'%s'?" % question['word'])
-    options = question['options']
-    for i in range(len(options)):
-        i += 1
-        print(u"\t%d) %s" % (i, options[i-1][1]))
-
-    answer = input(u"\nIntroduce el número respuesta: ")
-    answer = int(answer)
-    if question['answer'] == answer-1:
-        print("\t¡¡BIEN!!")
-    else:
-        print("\t¡mal!")
-
+    game.play_interactive(n_options=4)
