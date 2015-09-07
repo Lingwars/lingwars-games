@@ -49,7 +49,7 @@ LINGWARS_GAMES_DIRS = [
     os.path.join(BASE_DIR, '../games'),
 ]
 for item in LINGWARS_GAMES_DIRS:
-    print(item)
+    # TODO: Don't like this...
     sys.path.append(item)
 
 
