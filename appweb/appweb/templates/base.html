@@ -4,8 +4,21 @@
     <title></title>
 </head>
 <body>
-    {% block content %}
+    {% block menu %}
+        <p>
+            {% if request.user.is_authenticated %}
+                    {{ request.user }} (<a href="{% url 'logout' %}">logout</a>)
+            {% else %}
+                    <a href="{% url 'login' %}">Register/Login</a>
+            {% endif %}
+            | <a href="{% url 'game_list' %}">Games</a>
+            | <a href="{% url 'user_ranking' %}">Ranking general</a>
+        </p>
+    {% endblock %}
 
+    {% block content %}
+        <h2>Lingwars</h2>
+        <p>Some easy games to play with</p>
     {% endblock %}
 </body>
 </html>
