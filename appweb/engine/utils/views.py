@@ -72,7 +72,9 @@ class QuestionView(GameMixinView, TemplateView):
             return self.get(request, *args, **kwargs)
 
         data = request.session[self.uuid]
-        score = self.score(data['response'], request.POST)
+        question = data['question']
+        response = data['response']
+        score = self.score(question, response, request.POST)
 
         if request.user and request.user.is_authenticated():
             player, created = Player.objects.get_or_create(user=request.user, game=self.object)
@@ -82,7 +84,7 @@ class QuestionView(GameMixinView, TemplateView):
         redirect_url = reverse('game_play', kwargs={'pk': self.object.pk})
         return redirect(redirect_url)
 
-    def score(self, response, user_answer):
+    def score(self, question, response, user_answer):
         score = self.game.score(response, user_answer)
         if score > 0:
             messages.add_message(self.request, messages.SUCCESS, 'Well done!')

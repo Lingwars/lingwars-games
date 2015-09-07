@@ -1,9 +1,6 @@
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.conf import settings
-from django.db.models.signals import post_save
-
-from engine.models import PlayerScore
 
 
 @python_2_unicode_compatible
@@ -52,15 +49,3 @@ class Question(models.Model):
     def options(self, value_list):
         self._n_options = len(value_list)
         self._options = '|'.join([it.word for it in value_list])
-
-
-# TODO: Reinventar todo esto.
-from django.apps import apps
-def log_player_score(instance, **kwargs):
-    word2def = apps.get_app_config('word2def')
-    player = word2def.get_player(instance.user)
-    if player:
-        score = 1 if instance.correct else 0
-        PlayerScore.objects.create(player=player, score=score)
-        player.touch()
-post_save.connect(log_player_score, sender=Question)

@@ -19,14 +19,11 @@ class Game(GameBase):
     def make_question(self, level, n_options):
         words = self.lookup_words(level, n_options)
         word, options, answer = self.random_question(words, n_options)
-        question = {'query': word, 'options': options}
+        question = {'query': word, 'options': options, 'level':level}
         response = {'answer': answer, 'info': u"%s: %s" % (options[answer][0], options[answer][1])}
         return question, response
 
     def score(self, response, user_answer):
-        print("*"*20)
-        print(response)
-        print(user_answer)
         r = response.get('answer')
         u = user_answer.get('answer', None)
         try:
