@@ -12,7 +12,7 @@
         <h3>{{ question.query }}</h3>
         <div>
             {% block answer %}
-                Question.answer not defined in template.
+                {% include question.answer_template %}
             {% endblock %}
         </div>
 {% endblock %}

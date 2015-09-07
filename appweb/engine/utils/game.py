@@ -4,14 +4,5 @@
 class GameBase(object):
     title = None
 
-    @classmethod
-    def get_title(cls):
-        if not cls.title:
-            raise ValueError("Provide a 'title' attribute for your game")
-        return cls.title
-
-    def make_question(self, *args, **kwargs):
-        raise NotImplementedError()
-
-    def score(self, response, user_answer):
-        raise NotImplementedError
+    def __init__(self, *args, **kwargs):
+        pass

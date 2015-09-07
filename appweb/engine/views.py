@@ -1,33 +1,26 @@
 from __future__ import division
 from __future__ import absolute_import
 
-from django.views.generic.detail import SingleObjectMixin
-from django.views.generic import DetailView, RedirectView, TemplateView
+from django.views.generic import DetailView, TemplateView
 from django.core.urlresolvers import reverse
 from django.utils import timezone
-from django.db.models import Sum, Count, F, FloatField
+from django.db.models import Sum, F, FloatField
 from django.shortcuts import redirect
 
 
-from .models import Game, PlayerScore, Player
+from .models import Game, Player
 from .utils.views import QuestionView, GameMixinView
 
 
 class GameDetailView(GameMixinView, DetailView):
 
-    def get_object(self, queryset=None):
-        return self.app
-
     def get_template_names(self):
         names = super(GameDetailView, self).get_template_names()
-        return ['%s/game_detail.html' % self.get_app_label()] + names
+        return ['%s/game_detail.html' % self.object.id] + names
 
 
 class GameRankingView(GameMixinView, DetailView):
     template_name = 'engine/game_ranking.html'
-
-    def get_object(self, queryset=None):
-        return self.app
 
 
 from django.db.models.aggregates import Aggregate, Value
@@ -72,23 +65,16 @@ class UserRankingView(TemplateView):
 
 
 class GamePlayView(QuestionView):
-    template_name = 'engine/game_play_%s.html'
+    template_name = 'engine/game_play.html'
 
     def get(self, request, *args, **kwargs):
-        if self.app.is_app:
+        self.object = self.get_object()
+        if self.object.is_app:
             # Redirect to play URL inside app
-            app_label = self.get_app_label()
-            return redirect(reverse('%s:play' % app_label))
+            return redirect(reverse('%s:play' % self.object.id))
         else:
             return super(GamePlayView, self).get(request, *args, **kwargs)
 
-    def get_template_names(self):
-        if 'options' in self.question:
-            return [self.template_name % 'options']
-        elif 'yesno' in self.question:
-            return [self.template_name % 'yesno']
-        return []
-
     def get_context_data(self, **kwargs):
-        answer_url = reverse('game_answer', kwargs={'game_pk': self.app.pk, 'uuid': self.uuid})
-        return super(GamePlayView, self).get_context_data(answer_url=answer_url, game=self.app)
+        answer_url = reverse('game_answer', kwargs={'pk': self.object.pk, 'uuid': self.uuid})
+        return super(GamePlayView, self).get_context_data(answer_url=answer_url, game=self.object)

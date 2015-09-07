@@ -8,26 +8,26 @@ from django.views.generic import TemplateView
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
+from django.apps import apps
+from django.views.generic.detail import SingleObjectMixin
 from ..models import Player, PlayerScore, Game
 
 
+engine_app = apps.get_app_config('engine')
 
-class GameMixinView(object):
-    games_qs = Game.objects.active()
 
-    @property
-    def object(self):
+class GameMixinView(SingleObjectMixin):
+    queryset = Game.objects.active()
+
+    def get_object(self, pk=None):
+        pk = pk or self.kwargs[self.pk_url_kwarg]
         if not hasattr(self, '_object'):
-            self._object = self.games_qs.get(pk=self.kwargs['pk'])
+            self._object = self.queryset.get(pk=pk)
         return self._object
 
     @property
-    def app(self):
-        return self.object.get_app_config()
-
-    @property
     def game(self):
-        return self.object.get_game()
+        return engine_app.games[self.object.id]
 
 
 class QuestionView(GameMixinView, TemplateView):
@@ -42,16 +42,31 @@ class QuestionView(GameMixinView, TemplateView):
                 self._uuid = self.kwargs['uuid']
         return self._uuid
 
+    def get_answer_template(self, question):
+        if 'options' in question:
+            return 'engine/_answer_options.html'
+        elif 'yesno' in question:
+            return 'engine/_answer_yesno.html'
+        else:
+            return None
+
     def get_context_data(self, *args, **kwargs):
         level = 2  # TODO: Allow user to select level
         question, response = self.game.make_question(level=level, n_options=4)
+        question.update({'answer_template': self.get_answer_template(question)})
         self.request.session[self.uuid] = {'question': question, 'response': response}
 
         context = super(QuestionView, self).get_context_data(*args, **kwargs)
         context.update({'question': question, 'level': level, 'id': self.uuid})
         return context
 
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return super(QuestionView, self).get(request, *args, **kwargs)
+
     def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+
         if not request.session.get(self.uuid, False):
             messages.add_message(request, messages.ERROR, u"Invalid answer identifier")
             return self.get(request, *args, **kwargs)
@@ -60,11 +75,11 @@ class QuestionView(GameMixinView, TemplateView):
         score = self.score(data['response'], request.POST)
 
         if request.user and request.user.is_authenticated():
-            player, created = Player.objects.get_or_create(user=request.user, game=self.app)
+            player, created = Player.objects.get_or_create(user=request.user, game=self.object)
             PlayerScore.objects.create(player=player, score=score)
             player.touch()
 
-        redirect_url = reverse('game_play', kwargs={'game_pk': self.app.pk})
+        redirect_url = reverse('game_play', kwargs={'pk': self.object.pk})
         return redirect(redirect_url)
 
     def score(self, response, user_answer):
