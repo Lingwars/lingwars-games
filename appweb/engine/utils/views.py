@@ -36,7 +36,6 @@ class QuestionView(GameMixinView, TemplateView):
     def uuid(self):
         if not hasattr(self, '_uuid'):
             if not 'uuid' in self.kwargs:
-                print("*"*30)
                 self._uuid = str(uuid.uuid4())
             else:
                 self._uuid = self.kwargs['uuid']
@@ -95,6 +94,5 @@ class QuestionView(GameMixinView, TemplateView):
             messages.add_message(self.request, messages.SUCCESS, 'Well done!')
         else:
             messages.add_message(self.request, messages.SUCCESS, 'Oooohhh! You failed')
-        print(response)
         messages.add_message(self.request, messages.INFO, response.get('info', None))
         return score
