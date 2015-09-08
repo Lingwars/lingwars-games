@@ -22,7 +22,7 @@ class EngineAppConfig(AppConfig):
     games = {}
 
     def register_games(self):
-        log.info("Available games:")
+        log.debug("Available games:")
         game_model = self.get_model('Game')
         game_model.objects.all().update(available=False, is_app=False)
 
@@ -31,7 +31,7 @@ class EngineAppConfig(AppConfig):
         for app in apps.get_app_configs():
             if isinstance(app, GameConfig):
                 app_games_module.append(app.module.__path__[0])
-                log.info(u"\t - %s: %s" % (app.name, app.verbose_name))
+                log.debug(u"\t - %s: %s" % (app.name, app.verbose_name))
                 id = app.name.rsplit('.', 1)[1]
                 if game_model.objects.filter(id=id, available=True).exists():
                     raise RuntimeError(u"A game with id '%s' already exists" % id)
@@ -60,7 +60,7 @@ class EngineAppConfig(AppConfig):
                         module = '%s.game' % (item)
                         game = import_string(module)
                         assert_game(game)
-                        log.info(u"\t - %s" % module)
+                        log.debug(u"\t - %s" % module)
 
                         obj, created = game_model.objects.get_or_create(id=str(item), defaults={'title': getattr(game, 'title', item), 'is_app': False})
                         obj.available = True

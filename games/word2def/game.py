@@ -20,7 +20,7 @@ class Game(GameBase):
         words = self.lookup_words(level, n_options)
         word, options, answer = self.random_question(words, n_options)
         question = {'query': word, 'options': options, 'level':level}
-        response = {'answer': answer, 'info': u"%s: %s" % (options[answer][0], options[answer][1])}
+        response = {'answer': answer, 'info': "%s: %s" % (options[answer][0], options[answer][1])}
         return question, response
 
     def score(self, response, user_answer):
@@ -87,8 +87,8 @@ class Game(GameBase):
     def play_options(self, question):
         for i in range(len(question['options'])):
             i += 1
-            print(u"\t%d) %s" % (i, question['options'][i-1][1]))
-        user_input = input(u"\nIntroduce el número respuesta: ")
+            print("\t%d) %s" % (i, question['options'][i-1][1]))
+        user_input = input("\nIntroduce el número de la respuesta: ")
         user_answer = {'answer': int(user_input)-1}
         return user_answer
 
