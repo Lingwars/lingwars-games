@@ -1,18 +1,16 @@
 {% extends 'engine/game_detail.html' %}
+{% load i18n %}
 
 {% block content_game %}
-        {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-
-        <h3>{{ question.query }}</h3>
-        <div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>{% trans "Question" %}: {{ question.query }}</h3>
+                </div>
+            </div>
             {% block answer %}
                 {% include question.answer_template %}
             {% endblock %}
+            </div>
         </div>
 {% endblock %}

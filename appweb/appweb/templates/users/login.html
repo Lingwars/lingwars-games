@@ -11,7 +11,7 @@
       }
 
       .form-signin {
-        max-width: 300px;
+        max-width: 400px;
         padding: 19px 29px 29px;
         margin: 0 auto 20px;
         background-color: #fff;
@@ -38,18 +38,26 @@
     </style>
 {% endblock %}
 
+{% block navbar_login_form %}
+{% endblock %}
+
 {% block content %}
-    {% if form.errors %}
-        <p>Your username and password didn't match. Please try again.</p>
-    {% endif %}
     <form class="form-signin" method="post" action="{% url 'login' %}">
         <h2 class="form-signin-heading">{% trans "Please sign in" %}</h2>
         {% csrf_token %}
         {{ form }}
         <input type="hidden" name="next" value="{{ next }}" />
+        <br/>
         <button class="btn btn-large btn-primary" type="submit">{% trans "Sign in" %}</button>
+
+        <ol style="visibility:hidden;"></ol>
+        {% url 'register' as register_url %}
+        <p>
+            {% blocktrans %}
+                If you don't have an account, please <a href="{{ register_url }}">register</a>.
+            {% endblocktrans %}
+        </p>
     </form>
 
-    <h2>... or Register</h2>
-    <a href="{% url 'register' %}">Register</a> new account.
+
 {% endblock %}

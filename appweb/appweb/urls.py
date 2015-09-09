@@ -17,8 +17,8 @@ urlpatterns = [
     url(r'^logout/$', logout, name='logout'),
     url(r'^register/$', register, name='register'),
 
-    url(r'^', include('engine.urls')),
+    url(r'^game/engine/', include('engine.urls')),
 
-    url(r'^word2def/', include('games.word2def.urls', namespace='word2def')), # TODO: Auto-add because we need namespace to be that 'id',
+    url(r'^game/word2def/', include('games.word2def.urls', namespace='word2def')), # TODO: Auto-add because we need namespace to be that 'id',
 
 ]

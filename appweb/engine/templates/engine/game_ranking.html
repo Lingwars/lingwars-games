@@ -1,19 +1,21 @@
 {% extends "engine/game_detail.html" %}
+{% load i18n %}
 
 {% block content_game %}
-    <p>Game ranking: un poco de javascript, grafiquitas y demás.</p>
-    <table>
+    <table class="table table-hover">
         <thead>
-            <th>Player</th>
-            <th>Rank</th>
-            <th>Points</th>
-            <th>Rounds</th>
-            <th>Score</th>
+            <tr>
+                <th>#</th>
+                <th>{% trans "Player" %}</th>
+                <th>{% trans "Points" %}</th>
+                <th>{% trans "Rounds" %}</th>
+                <th>{% trans "Score" %}</th>
+            </tr>
         </thead>
         {% for player in players %}
             <tr>
+                <th>{{ forloop.counter }}</th>
                 <td>{{ player.user }}</td>
-                <td>{{ forloop.counter }}</td>
                 <td>{{ player.sum|floatformat:"2" }}</td>
                 <td>{{ player.count }}</td>
                 <td>{{ player.score|floatformat:"2" }}</td>

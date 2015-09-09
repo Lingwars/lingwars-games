@@ -31,6 +31,7 @@ class GameMixinView(SingleObjectMixin):
 
 
 class QuestionView(GameMixinView, TemplateView):
+    template_name = 'engine/game_play.html'
 
     @property
     def uuid(self):
@@ -56,6 +57,10 @@ class QuestionView(GameMixinView, TemplateView):
 
         context = super(QuestionView, self).get_context_data(*args, **kwargs)
         context.update({'question': question, 'id': self.uuid})
+
+        answer_url = reverse('game_answer', kwargs={'pk': self.object.pk, 'uuid': self.uuid})
+        context.update({'answer_url': answer_url})
+
         return context
 
     def get(self, request, *args, **kwargs):
@@ -91,8 +96,7 @@ class QuestionView(GameMixinView, TemplateView):
     def score(self, question, response, user_answer):
         score = self.game.score(response, user_answer)
         if score > 0:
-            messages.add_message(self.request, messages.SUCCESS, 'Well done!')
+            messages.add_message(self.request, messages.SUCCESS, 'Well done! %s' % response.get('info', None))
         else:
-            messages.add_message(self.request, messages.SUCCESS, 'Oooohhh! You failed')
-        messages.add_message(self.request, messages.INFO, response.get('info', None))
+            messages.add_message(self.request, messages.ERROR, 'Oooohhh! You failed. %s' % response.get('info', None))
         return score

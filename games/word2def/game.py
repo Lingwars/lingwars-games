@@ -19,8 +19,8 @@ class Game(GameBase):
     def make_question(self, level, n_options, *args, **kwargs):
         words = self.lookup_words(level, n_options)
         word, options, answer = self.random_question(words, n_options)
-        question = {'query': word, 'options': options, 'level':level}
-        response = {'answer': answer, 'info': "%s: %s" % (options[answer][0], options[answer][1])}
+        question = {'query': word, 'options': [it[1] for it in options], 'level':level}
+        response = {'answer': answer, 'options': options, 'info': "%s: %s" % (options[answer][0], options[answer][1])}
         return question, response
 
     def score(self, response, user_answer):

@@ -69,8 +69,6 @@ class UserRankingView(TemplateView):
         return context
 
 class GamePlayView(QuestionView):
-    template_name = 'engine/game_play.html'
-
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
         if self.object.is_app:

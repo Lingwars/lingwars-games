@@ -1,6 +1,26 @@
 {% extends "base.html" %}
+{% load i18n appweb %}
 
 {% block content %}
+    <div class="col-sm-3 col-md-2 sidebar">
+        <h3>{% trans "Games" %}</h3>
+        {% get_active_games as game_list %}
+        {% for game in game_list %}
+            {% if forloop.first %}<ul class="nav nav-sidebar">{% endif %}
+                <li class="{% active '^/game/'|add:game.id %}"><a href="{{ game.get_absolute_url }}">{{ game }}</a></li>
+            {% if forloop.last %}</ul>{% endif %}
+        {% endfor %}
+    </div>
+
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                <a class="close" data-dismiss="alert">×</a>
+                {{ message }}
+            </div>
+        {% endfor %}
+
         {% block content_engine %}
         {% endblock %}
+    </div>
 {% endblock %}
