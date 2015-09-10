@@ -12,6 +12,11 @@ from apicultur.utils import ApiculturRateLimitSafe
 
 from engine.utils.game import GameBase, QuestionError
 
+try:
+    from urllib.parse import urlencode
+except ImportError:
+    from urllib import urlencode
+
 
 import logging
 log = logging.getLogger(__name__)
@@ -57,7 +62,9 @@ class Game(GameBase):
     @classmethod
     def build_question(cls, word, options, answer, level):
         question = {'query': word, 'options': [it[1] for it in options], 'level':level}
-        response = {'answer': answer, 'options': options, 'info': "%s: %s" % (options[answer][0], options[answer][1])}
+        rae_url = 'http://lema.rae.es/drae/srv/search?' + urlencode({'word': options[answer][0]})
+        info = "<a href=\"%s\"><strong>%s</strong></a>: %s" % (rae_url, options[answer][0].title(), options[answer][1])
+        response = {'answer': answer, 'options': options, 'info': info}
         return question, response
 
     def score(self, response, user_answer):
@@ -143,5 +150,5 @@ if __name__ == '__main__':
     except ImportError:
         from appweb.secret import ACCESS_TOKEN_IO, ACCESS_TOKEN_STORE
 
-    game = Game(ACCESS_TOKEN_IO, ACCESS_TOKEN_STORE)
-    game.play_interactive(n_options=4)
+    game = Game(ACCESS_TOKEN_IO, ACCESS_TOKEN_STORE, n_options=4)
+    game.play_interactive()

@@ -10,6 +10,7 @@ from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
 from django.apps import apps
 from django.views.generic.detail import SingleObjectMixin
+from django.utils.safestring import mark_safe
 from ..models import Player, PlayerScore, Game
 
 
@@ -96,7 +97,7 @@ class QuestionView(GameMixinView, TemplateView):
     def score(self, question, response, user_answer):
         score = self.game.score(response, user_answer)
         if score > 0:
-            messages.add_message(self.request, messages.SUCCESS, 'Well done! %s' % response.get('info', None))
+            messages.add_message(self.request, messages.SUCCESS, mark_safe('Well done! %s' % response.get('info', None)))
         else:
-            messages.add_message(self.request, messages.ERROR, 'Oooohhh! You failed. %s' % response.get('info', None))
+            messages.add_message(self.request, messages.ERROR, mark_safe('Oooohhh! You failed. %s' % response.get('info', None)))
         return score
