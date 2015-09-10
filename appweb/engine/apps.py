@@ -42,6 +42,7 @@ class EngineAppConfig(AppConfig):
                 obj, created = game_model.objects.get_or_create(id=str(id), defaults={'title': app.verbose_name, 'is_app': True})
                 obj.available = True
                 obj.is_app = True
+                obj.author = getattr(game, 'author', None)
                 obj.save()
                 self.games[id] = game
 

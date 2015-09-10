@@ -5,21 +5,15 @@
         {% trans "Select your answer:" %}
     </div>
     <div class="col-md-10">
-        <div class="table-responsive">
-        <table class="table table-condensed">
+        <div class="list-group">
             {% for ans in question.options %}
-                <tr>
-                    <td class="btn btn-default align-left" style="white-space: normal;">
-                        <a class="pull-left" href="#" onclick="document.getElementById('answer-{{ forloop.counter0 }}').submit();">
-                            &raquo; {{ ans }}
-                        </a>
-                        <form class="hidden" id="answer-{{ forloop.counter0 }}" method="POST" action="{{ answer_url }}">{% csrf_token %}
-                            <input type="hidden" name="answer" value="{{ forloop.counter0 }}">
-                        </form>
-                    </td>
-                </tr>
+                <a href="#" class="list-group-item" onclick="document.getElementById('answer-{{ forloop.counter0 }}').submit();">
+                    &raquo; {{ ans }}
+                </a>
+                <form class="hidden" id="answer-{{ forloop.counter0 }}" method="POST" action="{{ answer_url }}">{% csrf_token %}
+                    <input type="hidden" name="answer" value="{{ forloop.counter0 }}">
+                </form>
             {% endfor %}
-        </table>
-    </div>
         </div>
+    </div>
 </div>

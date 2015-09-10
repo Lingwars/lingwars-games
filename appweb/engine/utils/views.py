@@ -11,6 +11,7 @@ from django.core.urlresolvers import reverse
 from django.apps import apps
 from django.views.generic.detail import SingleObjectMixin
 from django.utils.safestring import mark_safe
+from django.utils.translation import ugettext_lazy as _
 from ..models import Player, PlayerScore, Game
 
 
@@ -29,6 +30,11 @@ class GameMixinView(SingleObjectMixin):
     @property
     def game(self):
         return engine_app.games[self.object.id]
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(GameMixinView, self).get_context_data(*args, **kwargs)
+        context.update({'description': getattr(self.game, 'description', None)})
+        return context
 
 
 class QuestionView(GameMixinView, TemplateView):
@@ -57,7 +63,7 @@ class QuestionView(GameMixinView, TemplateView):
         self.request.session[self.uuid] = {'question': question, 'response': response}
 
         context = super(QuestionView, self).get_context_data(*args, **kwargs)
-        context.update({'question': question, 'id': self.uuid})
+        context.update({'question': question, 'id': self.uuid,})
 
         answer_url = reverse('game_answer', kwargs={'pk': self.object.pk, 'uuid': self.uuid})
         context.update({'answer_url': answer_url})
@@ -97,7 +103,12 @@ class QuestionView(GameMixinView, TemplateView):
     def score(self, question, response, user_answer):
         score = self.game.score(response, user_answer)
         if score > 0:
-            messages.add_message(self.request, messages.SUCCESS, mark_safe('Well done! %s' % response.get('info', None)))
+            icon = '<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>'
+            message_level = messages.SUCCESS
+            sr_message = _('Well done')
         else:
-            messages.add_message(self.request, messages.ERROR, mark_safe('Oooohhh! You failed. %s' % response.get('info', None)))
+            icon = '<span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>'
+            message_level = messages.ERROR
+            sr_message = _('Error')
+        messages.add_message(self.request, message_level, mark_safe('%s <span class="sr-only">%s:</span> %s' % (icon, sr_message, response.get('info', None))))
         return score

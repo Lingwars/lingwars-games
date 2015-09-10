@@ -8,6 +8,10 @@ from random import randint
 
 class SumGame(GameBase):
     title = 'Maths: Sum'
+    author = 'Lingwars'
+    description = """
+    In this game you have to
+    """
 
     def make_question(self, *args, **kwargs):
         a = randint(0, 100)

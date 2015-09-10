@@ -2,7 +2,16 @@
 {% load i18n %}
 
 {% block content_engine %}
-        <h2>{{ game.title }}</h2>
+        <h2>
+            {{ game.title }}
+            {% if game.author %}
+                <small>
+                    {% blocktrans with author=game.author %}
+                    by {{ author }}
+                    {% endblocktrans %}
+                </small>
+            {% endif %}
+        </h2>
         <p>
             <a href="{% url 'game_detail' game.id %}">{% trans "details" %}</a> |
             <a href="{% url 'game_play' game.id %}">{% trans "play" %}</a> |
@@ -10,7 +19,11 @@
         </p>
         <div>
             {% block content_game %}
-                <p>Game details (default in 'engine/game_detail.html')...</p>
+                {% if description %}
+                    <p>{{ description }}</p>
+                {% else %}
+                    <p>{% trans "No description" %}.</p>
+                {% endif %}
             {% endblock %}
         </div>
 {% endblock %}

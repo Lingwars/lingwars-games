@@ -18,6 +18,7 @@ class Game(models.Model):
     available = models.BooleanField(default=True)
     active = models.BooleanField(default=True)
     is_app = models.BooleanField()
+    author = models.CharField(max_length=60, blank=True, null=True)
 
     date_added = models.DateTimeField(auto_now_add=True)
 
