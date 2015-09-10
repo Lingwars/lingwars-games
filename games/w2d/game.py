@@ -4,7 +4,7 @@
 from engine.utils.game import GameBase
 
 class Game(GameBase):
-    title = 'Word 2 Def (simple)'
+    title = '2+3 = 5'
 
     def make_question(self, *args, **kwargs):
         query = '2+3'

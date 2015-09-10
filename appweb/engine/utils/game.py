@@ -3,6 +3,10 @@
 
 from builtins import input
 
+class QuestionError(Exception):
+    pass
+
+
 class GameBase(object):
     title = None
 

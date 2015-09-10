@@ -3,6 +3,7 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 
 from engine.utils.views import QuestionView
+from engine.utils.game import QuestionError
 
 from .models import Question, Definition
 
@@ -18,13 +19,20 @@ class Word2DefQuestionView(QuestionView):
 
     def make_question(self):
         level = 2  # TODO: Allow user to select level
-        question, response = self.game.make_question(level=level, n_options=4)
 
-        # Store data associated to 'response' and 'user_answer'
-        #defs = [Definition(word=opt[0], definition=opt[1], level=level) for opt in response['options']]
-        # Definition.objects.bulk_create(defs)
-        for opt in response['options']:
-            Definition.objects.get_or_create(word=opt[0], defaults={'definition': opt[1], 'level': level})
+        try:
+            question, response = self.game.make_question(level=level)
+
+            # Store data associated to 'response' and 'user_answer'
+            #defs = [Definition(word=opt[0], definition=opt[1], level=level) for opt in response['options']]
+            # Definition.objects.bulk_create(defs)
+            for opt in response['options']:
+                Definition.objects.get_or_create(word=opt[0], defaults={'definition': opt[1], 'level': level})
+
+        except QuestionError as e:
+            words = Definition.objects.all().order_by('?').values_list('word', 'definition')[:4]
+            word, options, answer = self.game.get_random_question(words, 4)
+            question, response = self.game.build_question(word, options, answer, level)
 
         return question, response
 

@@ -7,7 +7,7 @@ from .models import Definition, Question
 class DefinitionAdmin(admin.ModelAdmin):
     list_display = ('word', 'level',)
     list_filter = ('level',)
-    search_fields = ('word__word',)
+    search_fields = ('word',)
 
 class QuestionCorrectFilter(admin.SimpleListFilter):
     title = _('correct')
