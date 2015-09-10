@@ -1,0 +1,25 @@
+{% load i18n %}
+
+<div class="row">
+    <div class="col-md-2">
+        <p>{% trans "Select your answer:" %}</p>
+        <p>
+        <form id="change_level_form" method="post" action="{% url 'word2def:change_level' %}">{% csrf_token %}
+            {{ level_form.level }}
+            <input type="hidden" name="next" value="{{ request.path }}">
+        </form>
+        </p>
+    </div>
+    <div class="col-md-10">
+        <div class="list-group">
+            {% for ans in question.options %}
+                <a href="#" class="list-group-item" onclick="document.getElementById('answer-{{ forloop.counter0 }}').submit();">
+                    &raquo; {{ ans }}
+                </a>
+                <form class="hidden" id="answer-{{ forloop.counter0 }}" method="POST" action="{{ answer_url }}">{% csrf_token %}
+                    <input type="hidden" name="answer" value="{{ forloop.counter0 }}">
+                </form>
+            {% endfor %}
+        </div>
+    </div>
+</div>

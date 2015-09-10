@@ -64,10 +64,11 @@ class Game(GameBase):
         question = {'query': word, 'options': [it[1] for it in options], 'level':level}
         rae_url = 'http://lema.rae.es/drae/srv/search?' + urlencode({'word': options[answer][0]})
         info = "<a href=\"%s\"><strong>%s</strong></a>: %s" % (rae_url, options[answer][0].title(), options[answer][1])
-        response = {'answer': answer, 'options': options, 'info': info}
+        response = {'answer': answer, 'options': options, 'info': info, 'level':level}
         return question, response
 
     def score(self, response, user_answer):
+        level = response.get('level')
         r = response.get('answer')
         u = user_answer.get('answer', None)
         try:

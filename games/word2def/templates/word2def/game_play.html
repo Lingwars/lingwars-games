@@ -1,0 +1,12 @@
+{% extends 'engine/game_play.html' %}
+
+{% block extra_js %}
+        {{ block.super }}
+        <script>
+            $(document).ready(function(){
+                $('#id_level').change(function() {
+                    $('#change_level_form').submit();
+                });
+            });
+        </script>
+{% endblock %}

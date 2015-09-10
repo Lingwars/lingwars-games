@@ -3,11 +3,13 @@
 
 {% block content_game %}
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
-                    <h3>{% trans "Question" %}: {{ question.query }}</h3>
+            {% block query %}
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>{% trans "Question" %}: {{ question.query }}</h3>
+                    </div>
                 </div>
-            </div>
+            {% endblock %}
             {% block answer %}
                 {% include question.answer_template %}
             {% endblock %}
