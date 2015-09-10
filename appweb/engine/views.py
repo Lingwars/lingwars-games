@@ -78,6 +78,5 @@ class GamePlayView(QuestionView):
             return super(GamePlayView, self).get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        print("o"*20)
         answer_url = reverse('game_answer', kwargs={'pk': self.object.pk, 'uuid': self.uuid})
         return super(GamePlayView, self).get_context_data(answer_url=answer_url, game=self.object)
