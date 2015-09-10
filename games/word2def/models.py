@@ -26,6 +26,7 @@ class Question(models.Model):
     query = models.ForeignKey(Definition)
     answer = models.ForeignKey(Definition, related_name='+')
     level = models.SmallIntegerField()
+    timestamp = models.DateTimeField(auto_now_add=True)
 
     _n_options = models.SmallIntegerField(db_column='n_options')
     _options = models.TextField(db_column='options')

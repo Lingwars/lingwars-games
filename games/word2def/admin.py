@@ -32,7 +32,8 @@ class QuestionCorrectFilter(admin.SimpleListFilter):
 
 class QuestionAdmin(admin.ModelAdmin):
     list_display = ('query', 'user', 'level', 'correct',)
-    list_filter = ('level', QuestionCorrectFilter,)
+    list_filter = ('level', QuestionCorrectFilter, 'timestamp')
+    readonly_fields = ('timestamp',)
     search_fields = ('query__word',)
 
 admin.site.register(Definition, DefinitionAdmin)

@@ -1,5 +1,6 @@
 
 from django.conf import settings
+from django.core.urlresolvers import reverse
 
 from engine.utils.views import QuestionView
 
@@ -44,3 +45,10 @@ class Word2DefQuestionView(QuestionView):
         instance.save(force_insert=True)
 
         return score
+
+    def get_context_data(self, **kwargs):
+        context = super(Word2DefQuestionView, self).get_context_data(**kwargs)
+        answer_url = reverse('word2def:answer', kwargs={'uuid': self.uuid})
+        context.update({'answer_url': answer_url, 'game': self.object})
+        return context
+
