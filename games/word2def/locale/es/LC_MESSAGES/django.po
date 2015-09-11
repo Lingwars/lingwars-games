@@ -20,20 +20,20 @@ msgstr ""
 
 #: admin.py:13
 msgid "correct"
-msgstr ""
+msgstr "correcto"
 
 #: admin.py:18
 msgid "Yes"
-msgstr ""
+msgstr "Sí"
 
 #: admin.py:19
 msgid "No"
-msgstr ""
+msgstr "No"
 
 #: forms.py:8
 #, python-format
 msgid "Level %d"
-msgstr ""
+msgstr "Nivel %d"
 
 #: game.py:34
 msgid ""
@@ -41,10 +41,12 @@ msgid ""
 "definition for the\n"
 "                    query word among several options."
 msgstr ""
+"Este desafío te pondrá a prueba con las definiciones de palabras. Deberás escoger la definición que se"
+"corresponde con una palabra dada"
 
 #: templates/word2def/_answer_options.html:5
 msgid "Select your answer:"
-msgstr ""
+msgstr "Selecciona tu respuesta"
 
 #: templates/word2def/game_detail.html:8
 msgid ""
@@ -54,15 +56,18 @@ msgid ""
 "                query word among several options.\n"
 "            "
 msgstr ""
+"\n"
+"Este desafío te pondrá a prueba con las definiciones de palabras. Deberás escoger la definición que se"
+"corresponde con una palabra dada"
 
 #: views.py:81
 msgid "Well done"
-msgstr ""
+msgstr "¡Bien!"
 
 #: views.py:85
 msgid "Error"
-msgstr ""
+msgstr "Error"
 
 #: views.py:95
 msgid "Tweet"
-msgstr ""
+msgstr "Tweet"
