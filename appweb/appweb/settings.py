@@ -41,6 +41,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'bootstrap3',  # https://github.com/dyve/django-bootstrap3
+
     'engine',
     'games.word2def',
 )

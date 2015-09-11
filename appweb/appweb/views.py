@@ -15,8 +15,6 @@ from django.utils.translation import ugettext as _
 @never_cache
 def login(request):
     if request.method == 'POST':
-        from pprint import pprint
-        pprint(request.POST)
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
             auth_login(request, form.get_user())

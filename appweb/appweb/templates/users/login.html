@@ -1,8 +1,7 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n bootstrap3 %}
 
-{% block css %}
-    {{ block.super }}
+{% block extra_css %}
     <style type="text/css">
       body {
         padding-top: 60px;
@@ -38,17 +37,20 @@
     </style>
 {% endblock %}
 
+
 {% block navbar_login_form %}
 {% endblock %}
 
 {% block content %}
-    <form class="form-signin" method="post" action="{% url 'login' %}">
+    <form class="form form-signin" method="post" action="{% url 'login' %}">
         <h2 class="form-signin-heading">{% trans "Please sign in" %}</h2>
         {% csrf_token %}
-        {{ form }}
+        {% bootstrap_form form %}
         <input type="hidden" name="next" value="{{ next }}" />
-        <br/>
-        <button class="btn btn-large btn-primary" type="submit">{% trans "Sign in" %}</button>
+
+        {% buttons %}
+            <button class="btn btn-large btn-primary" type="submit">{% trans "Sign in" %}</button>
+        {% endbuttons %}
 
         <ol style="visibility:hidden;"></ol>
         {% url 'register' as register_url %}
