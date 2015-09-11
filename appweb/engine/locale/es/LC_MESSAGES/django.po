@@ -36,7 +36,9 @@ msgid ""
 "\n"
 "                    by %(author)s\n"
 "                    "
-msgstr "%(author)s"
+msgstr ""
+"\n"
+"%(author)s"
 
 #: engine/templates/engine/game_detail.html:17
 msgid "details"
@@ -92,7 +94,9 @@ msgid ""
 "            Now it is implemented as: <strong>score = points/rounds</"
 "strong>.\n"
 "        "
-msgstr "Ahora está calculado utilzando: <strong>puntuación = puntos/rondas</strong>"
+msgstr ""
+"\n"
+"Ahora está calculado utilzando: <strong>puntuación = puntos/rondas</strong>"
 
 #: engine/templates/engine/home.html:6
 msgid "Challenges"
@@ -122,7 +126,9 @@ msgid ""
 "\n"
 "                                    by %(author)s\n"
 "                                "
-msgstr "$(author)s"
+msgstr ""
+"\n"
+"$(author)s"
 
 #: engine/utils/views.py:105
 msgid "Well done"
