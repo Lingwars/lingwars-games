@@ -5,13 +5,18 @@ from __future__ import absolute_import
 from engine.utils.game import GameBase
 from random import randint
 
+try:
+    from django.utils.translation import ugettext_lazy as _
+except ImportError:
+    _ = lambda u: u
+
 
 class SumGame(GameBase):
     title = 'Maths: Sum'
     author = 'Lingwars'
-    description = """
-    In this game you have to
-    """
+    description = _("""
+    In this game you will be presented with two integers and you have to compute how much their sum is.
+    """)
 
     def make_question(self, *args, **kwargs):
         a = randint(0, 100)

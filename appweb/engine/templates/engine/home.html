@@ -1,15 +1,37 @@
 {% extends 'engine/base.html' %}
 
-{% load i18n %}
+{% load i18n appweb %}
 
 {% block content_engine %}
-    <div class="jumbotron">
-      <div class="container">
-        <h1>{% trans "Games" %}</h1>
-        <p>{% trans "Some games/challenges. Take a chance!" %}.</p>
-      </div>
-    </div>
+    <h1>{% trans "Challenges" %}</h1>
     <div>
-        {% blcok %}
-        {% trans "Here, we are offering you some games to challenge your knowledge about" %}</div>
+        {% blocktrans %}
+        <p>
+            Here we are offering some challenges to test you. These games have been developed
+            by the <a href="http://lingwars.github.io/blog/" target="_blank">Lingẅars</a> team.
+        </p>
+        {% endblocktrans %}
+
+        <div class="row">
+            {% get_active_games as game_list %}
+            {% for game in game_list %}
+                <div class="col-md-4">
+                    <h3>
+                        {{ game.title }}
+                        {% if game.author %}
+                            <small>
+                                {% blocktrans with author=game.author %}
+                                    by {{ author }}
+                                {% endblocktrans %}
+                            </small>
+                        {% endif %}
+                    </h3>
+                    <p>{{ game.description|default:"No description provided" }}</p>
+                    <p>
+                        <a class="btn btn-default" href="" role="button">Play &raquo;</a>
+                    </p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}

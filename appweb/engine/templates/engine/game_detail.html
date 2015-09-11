@@ -21,11 +21,7 @@
         </p>
         <div>
             {% block content_game %}
-                {% if description %}
-                    <p>{{ description }}</p>
-                {% else %}
-                    <p>{% trans "No description" %}.</p>
-                {% endif %}
+                <p>{{ game.description|default:"No description available." }}</p>
             {% endblock %}
         </div>
 {% endblock %}

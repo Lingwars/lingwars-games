@@ -17,6 +17,10 @@ try:
 except ImportError:
     from urllib import urlencode
 
+try:
+    from django.utils.translation import ugettext_lazy as _
+except ImportError:
+    _ = lambda u: u
 
 import logging
 log = logging.getLogger(__name__)
@@ -27,6 +31,8 @@ class Game(GameBase):
     POOL_SIZE = 10
     question_pool = [deque([]) for _ in range(LEVELS)]  # Structure: [[(q1, r1), (q2, r2)], []]
     thr = threading.Thread()
+    description = _("""This challenge is about word definitions. You have to choose the correct definition for the
+                    query word among several options.""")
 
     def __init__(self, ACCESS_TOKEN_IO, ACCESS_TOKEN_STORE, n_options=4):
         self.api_io = ApiculturRateLimitSafe(ACCESS_TOKEN_IO, cfg_data='apicultur.io')

@@ -31,11 +31,6 @@ class GameMixinView(SingleObjectMixin):
     def game(self):
         return engine_app.games[self.object.id]
 
-    def get_context_data(self, *args, **kwargs):
-        context = super(GameMixinView, self).get_context_data(*args, **kwargs)
-        context.update({'description': getattr(self.game, 'description', None)})
-        return context
-
 
 class QuestionView(GameMixinView, TemplateView):
     template_name = 'engine/game_play.html'

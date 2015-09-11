@@ -4,6 +4,7 @@ from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
+from django.apps import apps
 
 
 class GameManager(models.Manager):
@@ -23,12 +24,23 @@ class Game(models.Model):
     date_added = models.DateTimeField(auto_now_add=True)
 
     objects = GameManager()
+    engine_app = apps.get_app_config('engine')
 
     def __str__(self):
         return u"%s" % self.title
 
     def get_absolute_url(self):
         return reverse('game_detail', kwargs={'pk': self.pk})
+
+    @property
+    def author2(self):
+        game = self.engine_app.games[self.id]
+        return getattr(game, 'author', None)
+
+    @property
+    def description(self):
+        game = self.engine_app.games[self.id]
+        return getattr(game, 'description', None)
 
 
 @python_2_unicode_compatible
