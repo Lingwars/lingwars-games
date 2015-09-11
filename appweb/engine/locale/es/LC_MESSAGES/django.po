@@ -20,15 +20,15 @@ msgstr ""
 
 #: engine/models.py:66
 msgid "Work as 'points'. Based on this the engine will compute rankings"
-msgstr ""
+msgstr "Funciona como \"puntos\", en función de ellos se calculan los rankings"
 
 #: engine/templates/engine/_answer_options.html:5
 msgid "Select your answer:"
-msgstr ""
+msgstr "Selecciona tu respuesta:"
 
 #: engine/templates/engine/base.html:6
 msgid "Games"
-msgstr ""
+msgstr "Juegos"
 
 #: engine/templates/engine/game_detail.html:9
 #, python-format
@@ -36,39 +36,39 @@ msgid ""
 "\n"
 "                    by %(author)s\n"
 "                    "
-msgstr ""
+msgstr "%(author)s"
 
 #: engine/templates/engine/game_detail.html:17
 msgid "details"
-msgstr ""
+msgstr "detalles"
 
 #: engine/templates/engine/game_detail.html:18
 msgid "play"
-msgstr ""
+msgstr "jugar"
 
 #: engine/templates/engine/game_detail.html:19
 msgid "ranking"
-msgstr ""
+msgstr "clasificación"
 
 #: engine/templates/engine/game_play.html:9
 msgid "Question"
-msgstr ""
+msgstr "Pregunta"
 
 #: engine/templates/engine/game_ranking.html:9
 msgid "Player"
-msgstr ""
+msgstr "Jugador"
 
 #: engine/templates/engine/game_ranking.html:10
 msgid "Points"
-msgstr ""
+msgstr "Puntos"
 
 #: engine/templates/engine/game_ranking.html:11
 msgid "Rounds"
-msgstr ""
+msgstr "Rondas"
 
 #: engine/templates/engine/game_ranking.html:12
 msgid "Score"
-msgstr ""
+msgstr "Puntuación"
 
 #: engine/templates/engine/game_ranking.html:28
 msgid ""
@@ -79,6 +79,12 @@ msgid ""
 "href=\"https://github.com/jgsogo/lingwars-games/issues/1\">ideas?</a>).\n"
 "        "
 msgstr ""
+"\n"
+"            *Este ranking tiene caracter temporal mientras desarrollamos "
+"un algoritmo que tenga en cuenta también\n"
+"            el número de rondas y la variable tiempo (<a "
+"href=\"https://github.com/jgsogo/lingwars-games/issues/1\">¿alguna idea?</a>).\n"
+"        "
 
 #: engine/templates/engine/game_ranking.html:34
 msgid ""
@@ -86,11 +92,11 @@ msgid ""
 "            Now it is implemented as: <strong>score = points/rounds</"
 "strong>.\n"
 "        "
-msgstr ""
+msgstr "Ahora está calculado utilzando: <strong>puntuación = puntos/rondas</strong>"
 
 #: engine/templates/engine/home.html:6
 msgid "Challenges"
-msgstr ""
+msgstr "Retos"
 
 #: engine/templates/engine/home.html:8
 msgid ""
@@ -103,6 +109,12 @@ msgid ""
 "        </p>\n"
 "        "
 msgstr ""
+"\n"
+"        <p>\n"
+"            Aquí tenemos algunos retos para ponerte a prueba. Estos desafíos has sido desarrollados por "
+"el equipo de <a href=\"http://lingwars.github.io/blog/\" target=\"_blank\">Lingẅars</a>."
+"        </p>\n"
+"        "
 
 #: engine/templates/engine/home.html:23
 #, python-format
@@ -110,12 +122,12 @@ msgid ""
 "\n"
 "                                    by %(author)s\n"
 "                                "
-msgstr ""
+msgstr "$(author)s"
 
 #: engine/utils/views.py:105
 msgid "Well done"
-msgstr ""
+msgstr "¡Bien!"
 
 #: engine/utils/views.py:109
 msgid "Error"
-msgstr ""
+msgstr "Error"

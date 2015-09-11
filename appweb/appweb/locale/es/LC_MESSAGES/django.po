@@ -20,39 +20,39 @@ msgstr ""
 
 #: appweb/templates/base.html:34
 msgid "Toggle navigation"
-msgstr ""
+msgstr "Cambiar navegación"
 
 #: appweb/templates/base.html:44
 msgid "logout"
-msgstr ""
+msgstr "salir"
 
 #: appweb/templates/base.html:56 appweb/templates/users/login.html:52
 msgid "Sign in"
-msgstr ""
+msgstr "Entrar"
 
 #: appweb/templates/base.html:57
 msgid "Register"
-msgstr ""
+msgstr "Registrarse"
 
 #: appweb/templates/base.html:63
 msgid "Games"
-msgstr ""
+msgstr "Juegos"
 
 #: appweb/templates/base.html:64
 msgid "More to come..."
-msgstr ""
+msgstr "Más en breve..."
 
 #: appweb/templates/home.html:7
 msgid "Who we are"
-msgstr ""
+msgstr "Quiénes somos"
 
 #: appweb/templates/home.html:8
 msgid "This is a working group..."
-msgstr ""
+msgstr "Esto es un grupo de trabajo"
 
 #: appweb/templates/users/login.html:46
 msgid "Please sign in"
-msgstr ""
+msgstr "Entra, por favor"
 
 #: appweb/templates/users/login.html:58
 #, python-format
@@ -61,19 +61,19 @@ msgid ""
 "                If you don't have an account, please <a href="
 "\"%(register_url)s\">register</a>.\n"
 "            "
-msgstr ""
+msgstr "Si no tienes una cuenta, <a href=\"%(register_url)s\">regístrate</a>."
 
 #: appweb/templates/users/logout.html:5
 msgid "Bye!"
-msgstr ""
+msgstr "¡Hasta pronto!"
 
 #: appweb/templates/users/register.html:45
 msgid "Please register"
-msgstr ""
+msgstr "Regístrate"
 
 #: appweb/templates/users/register.html:51
 msgid "Create"
-msgstr ""
+msgstr "Crear"
 
 #: appweb/templates/users/register.html:57
 #, python-format
@@ -82,8 +82,8 @@ msgid ""
 "                If you have an account, please <a href=\"%(login_url)s"
 "\">login</a>.\n"
 "            "
-msgstr ""
+msgstr "Si ya tienes una cuenta, <a href=\"%(login_url)s\">entra</a> con ella."
 
 #: appweb/views.py:33
 msgid "Logged out"
-msgstr ""
+msgstr "Desconectado"

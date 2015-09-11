@@ -12,6 +12,7 @@ admin.site.index_title = 'Lingwargs | Games'
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^i18n/', include('django.conf.urls.i18n')),
 
     #url(r'^$', home, name='home'),
     url(r'^$', RedirectView.as_view(permanent=False, pattern_name='games'), name='home'),
