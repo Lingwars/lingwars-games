@@ -1,0 +1,89 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-09-11 12:03+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: appweb/templates/base.html:34
+msgid "Toggle navigation"
+msgstr ""
+
+#: appweb/templates/base.html:44
+msgid "logout"
+msgstr ""
+
+#: appweb/templates/base.html:56 appweb/templates/users/login.html:52
+msgid "Sign in"
+msgstr ""
+
+#: appweb/templates/base.html:57
+msgid "Register"
+msgstr ""
+
+#: appweb/templates/base.html:63
+msgid "Games"
+msgstr ""
+
+#: appweb/templates/base.html:64
+msgid "More to come..."
+msgstr ""
+
+#: appweb/templates/home.html:7
+msgid "Who we are"
+msgstr ""
+
+#: appweb/templates/home.html:8
+msgid "This is a working group..."
+msgstr ""
+
+#: appweb/templates/users/login.html:46
+msgid "Please sign in"
+msgstr ""
+
+#: appweb/templates/users/login.html:58
+#, python-format
+msgid ""
+"\n"
+"                If you don't have an account, please <a href="
+"\"%(register_url)s\">register</a>.\n"
+"            "
+msgstr ""
+
+#: appweb/templates/users/logout.html:5
+msgid "Bye!"
+msgstr ""
+
+#: appweb/templates/users/register.html:45
+msgid "Please register"
+msgstr ""
+
+#: appweb/templates/users/register.html:51
+msgid "Create"
+msgstr ""
+
+#: appweb/templates/users/register.html:57
+#, python-format
+msgid ""
+"\n"
+"                If you have an account, please <a href=\"%(login_url)s"
+"\">login</a>.\n"
+"            "
+msgstr ""
+
+#: appweb/views.py:33
+msgid "Logged out"
+msgstr ""

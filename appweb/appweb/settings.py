@@ -106,6 +106,7 @@ LANGUAGES = [
     ('en', 'English'),
     ('es', 'Spanish'),
     ]
+LOCALE_PATHS = (os.path.join(BASE_DIR, 'appweb/locale'),)
 
 TIME_ZONE = 'UTC'
 

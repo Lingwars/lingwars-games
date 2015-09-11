@@ -6,15 +6,15 @@ from engine.utils.game import GameBase
 from random import randint
 
 try:
-    from django.utils.translation import ugettext_lazy as _
+    from django.utils.translation import ugettext_lazy
 except ImportError:
-    _ = lambda u: u
+    ugettext_lazy = lambda u: u
 
 
 class SumGame(GameBase):
     title = 'Maths: Sum'
     author = 'Lingwars'
-    description = _("""
+    description = ugettext_lazy("""
     In this game you will be presented with two integers and you have to compute how much their sum is.
     """)
 
