@@ -100,15 +100,22 @@ class QuestionView(GameMixinView, TemplateView):
     def make_question(self):
         return self.game.make_question(**self.get_question_kwargs())
 
-    def score(self, question, response, user_answer):
+    def score(self, question, response, user_answer, show_message=True):
         score = self.game.score(response, user_answer)
-        if score > 0:
-            icon = '<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>'
-            message_level = messages.SUCCESS
-            sr_message = _('Well done')
-        else:
-            icon = '<span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>'
-            message_level = messages.ERROR
-            sr_message = _('Error')
-        messages.add_message(self.request, message_level, mark_safe('%s <span class="sr-only">%s:</span> %s' % (icon, sr_message, response.get('info', None))))
+
+        if show_message:
+            if score > 0:
+                icon = 'glyphicon-thumbs-up'
+                message_level = messages.SUCCESS
+                sr_message = _('Well done')
+            else:
+                icon = 'glyphicon-thumbs-down'
+                message_level = messages.ERROR
+                sr_message = _('Error')
+
+            msg = mark_safe('<span class="glyphicon %s" aria-hidden="true"></span> '
+                            '<span class="sr-only">%s:</span> '
+                            '%s' % (icon, sr_message, response.get('info', None)))
+            messages.add_message(self.request, message_level, msg)
+
         return score

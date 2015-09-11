@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 from django.db.models import F
 
-from .models import Definition, Question
+from .models import Definition, Question, SavedWord
 
 class DefinitionAdmin(admin.ModelAdmin):
     list_display = ('word', 'level',)
@@ -36,5 +36,13 @@ class QuestionAdmin(admin.ModelAdmin):
     readonly_fields = ('timestamp',)
     search_fields = ('query__word',)
 
+
+class SavedWordAdmin(admin.ModelAdmin):
+    list_display = ('word', 'user', 'deleted',)
+    list_filter = ('deleted',)
+    search_fields = ('word__word',)
+
+
 admin.site.register(Definition, DefinitionAdmin)
 admin.site.register(Question, QuestionAdmin)
+admin.site.register(SavedWord, SavedWordAdmin)

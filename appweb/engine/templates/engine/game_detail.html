@@ -13,9 +13,11 @@
             {% endif %}
         </h2>
         <p>
-            <a href="{% url 'game_detail' game.id %}">{% trans "details" %}</a> |
-            <a href="{% url 'game_play' game.id %}">{% trans "play" %}</a> |
-            <a href="{% url 'game_ranking' game.id %}">{% trans "ranking" %}</a>
+            {% block game_menu %}
+            <a href="{% url 'game_detail' game.id %}">{% trans "details" %}</a>
+            | <a href="{% url 'game_play' game.id %}">{% trans "play" %}</a>
+            | <a href="{% url 'game_ranking' game.id %}">{% trans "ranking" %}</a>
+            {% endblock %}
         </p>
         <div>
             {% block content_game %}
