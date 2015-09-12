@@ -66,6 +66,10 @@ body {
   background-color: #428bca;
 }
 
+.navbar-form {
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
 
 /*
  * Main content
