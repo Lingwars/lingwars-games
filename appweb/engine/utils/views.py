@@ -108,9 +108,9 @@ class QuestionView(GameMixinView, TemplateView):
                 message_level = messages.ERROR
                 sr_message = _('Error')
 
-            msg = mark_safe('<span class="glyphicon %s" aria-hidden="true"></span> '
-                            '<span class="sr-only">%s:</span> '
-                            '%s' % (icon, sr_message, response.get('info', None)))
+            msg = mark_safe(u'<span class="glyphicon %s" aria-hidden="true"></span> '
+                            u'<span class="sr-only">%s:</span> '
+                            u'%s' % (icon, sr_message, response.get('info', None)))
             messages.add_message(self.request, message_level, msg)
 
         return score
