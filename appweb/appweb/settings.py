@@ -127,7 +127,6 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "appweb/static"),
 )
 
-
 from django.contrib.messages import constants as messages
 MESSAGE_TAGS = {
     messages.ERROR: 'danger'
@@ -161,3 +160,8 @@ LOGGING = {
 
 
 from .secret import *
+
+try:
+    from local_settings import *
+except ImportError:
+    pass

@@ -84,9 +84,9 @@ class Word2DefQuestionView(QuestionView):
             message_level = messages.ERROR
             sr_message = _('Error')
 
-        msg = mark_safe('<span class="glyphicon %s" aria-hidden="true"></span> '
-                        '<span class="sr-only">%s:</span> '
-                        '%s' % (icon, sr_message, response.get('info', None)))
+        msg = mark_safe(u'<span class="glyphicon %s" aria-hidden="true"></span> '
+                        u'<span class="sr-only">%s:</span> '
+                        u'%s' % (icon, sr_message, response.get('info', None)))
 
         # Tweet
         max_def_length = 140 - len(query.word) - len("► : \"\"\n -- via @lingwars")
