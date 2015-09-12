@@ -50,3 +50,28 @@ class Question(models.Model):
     def options(self, value_list):
         self._n_options = len(value_list)
         self._options = '|'.join([it.word for it in value_list])
+
+
+class SavedWordManager(models.Manager):
+    def deleted(self):
+        return self.filter(deleted=True)
+
+    def saved(self):
+        return self.filter(deleted=False)
+
+
+@python_2_unicode_compatible
+class SavedWord(models.Model):
+    word = models.ForeignKey(Definition)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    deleted = models.BooleanField(default=False)
+
+    objects = SavedWordManager()
+
+    class Meta:
+        unique_together = (('word', 'user'), )
+
+    def __str__(self):
+        return u"%s" % self.word
+

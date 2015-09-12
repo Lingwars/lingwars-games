@@ -3,7 +3,7 @@
 
 {% block content %}
     <div class="col-sm-3 col-md-2 sidebar">
-        <h3>{% trans "Games" %}</h3>
+        <h3>{% trans "Challenges" %}</h3>
         {% get_active_games as game_list %}
         {% for game in game_list %}
             {% if forloop.first %}<ul class="nav nav-sidebar">{% endif %}

@@ -1,0 +1,94 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-09-12 08:21+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: engine/models.py:66
+msgid "Work as 'points'. Based on this the engine will compute rankings"
+msgstr ""
+
+#: engine/templates/engine/_answer_options.html:5
+msgid "Select your answer:"
+msgstr ""
+
+#: engine/templates/engine/base.html:6 engine/templates/engine/home.html:6
+msgid "Challenges"
+msgstr ""
+
+#: engine/templates/engine/game_detail.html:9
+#: engine/templates/engine/home.html:20
+#, python-format
+msgid "by %(author)s"
+msgstr ""
+
+#: engine/templates/engine/game_detail.html:15
+msgid "details"
+msgstr ""
+
+#: engine/templates/engine/game_detail.html:16
+msgid "play"
+msgstr ""
+
+#: engine/templates/engine/game_detail.html:17
+msgid "ranking"
+msgstr ""
+
+#: engine/templates/engine/game_play.html:9
+msgid "Question"
+msgstr ""
+
+#: engine/templates/engine/game_ranking.html:9
+msgid "Player"
+msgstr ""
+
+#: engine/templates/engine/game_ranking.html:10
+msgid "Points"
+msgstr ""
+
+#: engine/templates/engine/game_ranking.html:11
+msgid "Rounds"
+msgstr ""
+
+#: engine/templates/engine/game_ranking.html:12
+msgid "Score"
+msgstr ""
+
+#: engine/templates/engine/game_ranking.html:28
+msgid ""
+"This ranking is temporal as we design a better ranking algorithm which takes "
+"into account number of rounds and time since last play to compute score (<a "
+"href=\"https://github.com/jgsogo/lingwars-games/issues/1\">ideas?</a>)"
+msgstr ""
+
+#: engine/templates/engine/game_ranking.html:31
+msgid "Now it is implemented as: <strong>score = points/rounds</strong>"
+msgstr ""
+
+#: engine/templates/engine/home.html:9
+msgid ""
+"Here we are offering some challenges to test you. These games have been "
+"developed by the <a href=\"http://lingwars.github.io/blog/\" target=\"_blank"
+"\">Lingẅars</a> team"
+msgstr ""
+
+#: engine/utils/views.py:105
+msgid "Well done"
+msgstr ""
+
+#: engine/utils/views.py:109
+msgid "Error"
+msgstr ""

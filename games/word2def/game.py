@@ -17,6 +17,10 @@ try:
 except ImportError:
     from urllib import urlencode
 
+try:
+    from django.utils.translation import ugettext_lazy
+except ImportError:
+    ugettext_lazy = lambda u: u
 
 import logging
 log = logging.getLogger(__name__)
@@ -27,6 +31,7 @@ class Game(GameBase):
     POOL_SIZE = 10
     question_pool = [deque([]) for _ in range(LEVELS)]  # Structure: [[(q1, r1), (q2, r2)], []]
     thr = threading.Thread()
+    description = ugettext_lazy("""This challenge is about word definitions. You have to choose the correct definition for the query word among several options.""")
 
     def __init__(self, ACCESS_TOKEN_IO, ACCESS_TOKEN_STORE, n_options=4):
         self.api_io = ApiculturRateLimitSafe(ACCESS_TOKEN_IO, cfg_data='apicultur.io')
@@ -62,7 +67,7 @@ class Game(GameBase):
     @classmethod
     def build_question(cls, word, options, answer, level):
         question = {'query': word, 'options': [it[1] for it in options], 'level':level}
-        rae_url = 'http://lema.rae.es/drae/srv/search?' + urlencode({'word': options[answer][0]})
+        rae_url = 'http://lema.rae.es/drae/srv/search?' + urlencode({'word': options[answer][0].encode('utf-8')})
         info = "<a href=\"%s\"><strong>%s</strong></a>: %s" % (rae_url, options[answer][0].title(), options[answer][1])
         response = {'answer': answer, 'options': options, 'info': info, 'level':level}
         return question, response

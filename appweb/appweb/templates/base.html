@@ -13,6 +13,8 @@
         {% block css %}
             <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" />
             <link href="{% static 'css/lingwars.css' %}" rel="stylesheet" />
+            {% block extra_css %}
+            {% endblock %}
         {% endblock %}
 
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -37,29 +39,47 @@
               <a class="navbar-brand" href="{% url 'home' %}">Lingẅars</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
-              {% if request.user.is_authenticated %}
-                <ul class="navbar-form navbar-right">
-                    <li><a href="{% url 'logout' %}" class="btn btn-primary">{{user}} ({% trans "logout" %})</a></li>
+                <ul class="nav navbar-nav navbar-right">
+                    <li id="dropdown-langs" class="dropdown langs">
+                        {% get_current_language as LANGUAGE_CODE %}
+                        {% get_available_languages as LANGUAGES %}
+                        {% get_language_info_list for LANGUAGES as languages %}
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            <span class="caret"></span>
+                            <span id="selectedlang"> <img src="{% static 'img/'|add:LANGUAGE_CODE|add:'.png' %}"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            {% for language in languages %}
+                                <li {% if language.code == LANGUAGE_CODE %} class="hidden"{% endif %}>
+                                    <a href="#" class="lang" data-link="{{ language.code }}"><img src="{% static 'img/'|add:language.code|add:'.png' %}"> {{ language.name_local }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
                 </ul>
-              {% else %}
-                {% block navbar_login_form %}
-                <form class="navbar-form navbar-right" method="post" action="{% url 'login' %}">{% csrf_token %}
-                    <div class="form-group">
-                      <input name="username" placeholder="Username" class="form-control">
-                    </div>
-                    <div class="form-group">
-                      <input name="password" type="password" placeholder="Password" class="form-control">
-                    </div>
-                    <input type="hidden" name="next" value="{{ request.path }}">
-                    <button type="submit" class="btn btn-success">{% trans "Sign in" %}</button>
-                    <a href="{% url 'register' %}" class="btn btn-primary">{% trans "Register" %}</a>
-                </form>
-                {% endblock %}
-              {% endif %}
+                <ul class="navbar-form navbar-right">
+                  {% if request.user.is_authenticated %}
+                        <li><a href="{% url 'logout' %}" class="btn btn-primary">{{user}} ({% trans "logout" %})</a></li>
+                  {% else %}
+                    {% block navbar_login_form %}
+                        <form class="navbar-form navbar-right" method="post" action="{% url 'login' %}">{% csrf_token %}
+                            <div class="form-group">
+                              <input name="username" placeholder="Username" class="form-control">
+                            </div>
+                            <div class="form-group">
+                              <input name="password" type="password" placeholder="Password" class="form-control">
+                            </div>
+                            <input type="hidden" name="next" value="{{ request.path }}">
+                            <button type="submit" class="btn btn-success">{% trans "Sign in" %}</button>
+                            <a href="{% url 'register' %}" class="btn btn-primary">{% trans "Register" %}</a>
+                        </form>
+                    {% endblock %}
+                  {% endif %}
+                </ul>
 
               <ul class="nav navbar-nav">
-                <li class="{% active '^/game' %}"><a href="{% url 'games' %}">{% trans "Games" %}</a></li>
-                <li><a href="#">{% trans "More..." %}</a></li>
+                <li class="{% active '^/game' %}"><a href="{% url 'games' %}">{% trans "Challenges" %}</a></li>
+                <li><a href="#">{% trans "More to come..." %}</a></li>
               </ul>
             </div>
           </div>
@@ -73,6 +93,7 @@
             </div>
         </div>
 
+
         {% block js %}
             <!-- Bootstrap core JavaScript
             ================================================== -->
@@ -83,6 +104,16 @@
             <script src="{% static 'js/ie10-viewport-bug-workaround.js' %}"></script>
             {% block extra_js %}
             {% endblock %}
+            <script>
+                $(document).ready(function(){
+                    $('#dropdown-langs li').click(function(){
+                        $('<form action="{% url 'set_language' %}" method="post">' +
+                            '<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">' +
+                            '<input type="hidden" name="language" value="' + $(this).children("a").attr("data-link") + '">' +
+                          '</form>').submit();
+                    });
+                });
+            </script>
         {% endblock %}
     </body>
 </html>

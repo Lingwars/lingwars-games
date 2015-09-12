@@ -6,24 +6,20 @@
             {{ game.title }}
             {% if game.author %}
                 <small>
-                    {% blocktrans with author=game.author %}
-                    by {{ author }}
-                    {% endblocktrans %}
+                    {% blocktrans with author=game.author %}by {{ author }}{% endblocktrans %}
                 </small>
             {% endif %}
         </h2>
         <p>
-            <a href="{% url 'game_detail' game.id %}">{% trans "details" %}</a> |
-            <a href="{% url 'game_play' game.id %}">{% trans "play" %}</a> |
-            <a href="{% url 'game_ranking' game.id %}">{% trans "ranking" %}</a>
+            {% block game_menu %}
+            <a href="{% url 'game_detail' game.id %}">{% trans "details" %}</a>
+            | <a href="{% url 'game_play' game.id %}">{% trans "play" %}</a>
+            | <a href="{% url 'game_ranking' game.id %}">{% trans "ranking" %}</a>
+            {% endblock %}
         </p>
         <div>
             {% block content_game %}
-                {% if description %}
-                    <p>{{ description }}</p>
-                {% else %}
-                    <p>{% trans "No description" %}.</p>
-                {% endif %}
+                <p>{{ game.description|default:"No description available." }}</p>
             {% endblock %}
         </div>
 {% endblock %}

@@ -1,6 +1,10 @@
 {% extends 'engine/game_detail.html' %}
 
+{% load i18n %}
+
+
 {% block content_game %}
-        <p>This html overrides default 'engine/game_detail.html' template.</p>
-        <p>Este juego trata de adivinar la difinición correspondiente a una palabra.</p>
+        <p>
+            {% blocktrans %}This challenge is about word definitions. You have to choose the correct definition for the query word among several options{% endblocktrans %}.
+        </p>
 {% endblock %}

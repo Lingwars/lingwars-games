@@ -1,11 +1,24 @@
 {% extends 'engine/game_play.html' %}
 
+{% load i18n %}
+
 {% block extra_js %}
         {{ block.super }}
         <script>
             $(document).ready(function(){
                 $('#id_level').change(function() {
                     $('#change_level_form').submit();
+                });
+            });
+
+            $(document).ready(function(){
+                $('#save-word').on('click',function(){
+                    $.ajax({
+                        method: "POST",
+                        url: "{% url 'word2def:save_word' %}",
+                        data: { word: $(this).attr("word"),
+                                csrfmiddlewaretoken: "{{ csrf_token }}" }
+                    })
                 });
             });
         </script>

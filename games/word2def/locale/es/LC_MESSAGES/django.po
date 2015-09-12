@@ -1,0 +1,72 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-09-12 10:22+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: admin.py:13
+msgid "correct"
+msgstr "correcto"
+
+#: admin.py:18
+msgid "Yes"
+msgstr "Sí"
+
+#: admin.py:19
+msgid "No"
+msgstr "No"
+
+#: forms.py:8
+#, python-format
+msgid "Level %d"
+msgstr "Nivel %d"
+
+#: game.py:34
+msgid ""
+"This challenge is about word definitions. You have to choose the correct "
+"definition for the query word among several options."
+msgstr ""
+"Este desafío te pondrá a prueba con las definiciones de palabras. Deberás "
+"escoger la definición que secorresponde con una palabra dada."
+
+#: templates/word2def/_answer_options.html:5
+msgid "Select your answer:"
+msgstr "Selecciona tu respuesta:"
+
+#: templates/word2def/game_detail.html:8
+msgid ""
+"This challenge is about word definitions. You have to choose the correct "
+"definition for the query word among several options"
+msgstr ""
+"Este desafío te pondrá a prueba con las definiciones de palabras. Deberás "
+"escoger la definición que secorresponde con una palabra dada"
+
+#: templates/word2def/savedword_list.html:6
+msgid "Saved words"
+msgstr "Palabras guardadas"
+
+#: views.py:81
+msgid "Well done"
+msgstr "¡Bien!"
+
+#: views.py:85
+msgid "Error"
+msgstr "Error"
+
+#: views.py:95
+msgid "Tweet"
+msgstr "Tweet"

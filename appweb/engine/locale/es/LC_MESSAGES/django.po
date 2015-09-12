@@ -1,0 +1,102 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-09-12 08:21+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: engine/models.py:66
+msgid "Work as 'points'. Based on this the engine will compute rankings"
+msgstr "Funciona como \"puntos\", en función de ellos se calculan los rankings"
+
+#: engine/templates/engine/_answer_options.html:5
+msgid "Select your answer:"
+msgstr "Selecciona tu respuesta:"
+
+#: engine/templates/engine/base.html:6 engine/templates/engine/home.html:6
+msgid "Challenges"
+msgstr "Retos"
+
+#: engine/templates/engine/game_detail.html:9
+#: engine/templates/engine/home.html:20
+#, python-format
+msgid "by %(author)s"
+msgstr ""
+
+#: engine/templates/engine/game_detail.html:15
+msgid "details"
+msgstr "detalles"
+
+#: engine/templates/engine/game_detail.html:16
+msgid "play"
+msgstr "jugar"
+
+#: engine/templates/engine/game_detail.html:17
+msgid "ranking"
+msgstr "clasificación"
+
+#: engine/templates/engine/game_play.html:9
+msgid "Question"
+msgstr "Pregunta"
+
+#: engine/templates/engine/game_ranking.html:9
+msgid "Player"
+msgstr "Jugador"
+
+#: engine/templates/engine/game_ranking.html:10
+msgid "Points"
+msgstr "Puntos"
+
+#: engine/templates/engine/game_ranking.html:11
+msgid "Rounds"
+msgstr "Rondas"
+
+#: engine/templates/engine/game_ranking.html:12
+msgid "Score"
+msgstr "Puntuación"
+
+#: engine/templates/engine/game_ranking.html:28
+msgid ""
+"This ranking is temporal as we design a better ranking algorithm which takes "
+"into account number of rounds and time since last play to compute score (<a "
+"href=\"https://github.com/jgsogo/lingwars-games/issues/1\">ideas?</a>)"
+msgstr ""
+"Este ranking tiene caracter temporal mientras desarrollamos un algoritmo que "
+"tenga en cuenta también el número de rondas y la variable tiempo (<a href="
+"\"https://github.com/jgsogo/lingwars-games/issues/1\">¿alguna idea?</a>)"
+
+#: engine/templates/engine/game_ranking.html:31
+msgid "Now it is implemented as: <strong>score = points/rounds</strong>"
+msgstr ""
+"Ahora está calculado utilizando: <strong>puntuación = puntos/rondas</strong>"
+
+#: engine/templates/engine/home.html:9
+msgid ""
+"Here we are offering some challenges to test you. These games have been "
+"developed by the <a href=\"http://lingwars.github.io/blog/\" target=\"_blank"
+"\">Lingẅars</a> team"
+msgstr ""
+"Aquí tenemos algunos retos para ponerte a prueba. Estos desafíos has sido "
+"desarrollados por el equipo de <a href=\"http://lingwars.github.io/blog/\" "
+"target=\"_blank\">Lingẅars</a>"
+
+#: engine/utils/views.py:105
+msgid "Well done"
+msgstr "¡Bien!"
+
+#: engine/utils/views.py:109
+msgid "Error"
+msgstr "Error"

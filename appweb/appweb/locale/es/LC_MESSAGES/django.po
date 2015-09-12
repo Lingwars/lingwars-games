@@ -1,0 +1,83 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-09-12 08:21+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: appweb/templates/base.html:34
+msgid "Toggle navigation"
+msgstr "Cambiar navegación"
+
+#: appweb/templates/base.html:62
+msgid "logout"
+msgstr "salir"
+
+#: appweb/templates/base.html:73 appweb/templates/users/login.html:52
+msgid "Sign in"
+msgstr "Entrar"
+
+#: appweb/templates/base.html:74
+msgid "Register"
+msgstr "Registrarse"
+
+#: appweb/templates/base.html:81
+msgid "Games"
+msgstr "Juegos"
+
+#: appweb/templates/base.html:82
+msgid "More to come..."
+msgstr "Más en breve..."
+
+#: appweb/templates/home.html:7
+msgid "Who we are"
+msgstr "Quiénes somos"
+
+#: appweb/templates/home.html:8
+msgid "This is a working group..."
+msgstr "Esto es un grupo de trabajo"
+
+#: appweb/templates/users/login.html:46
+msgid "Please sign in"
+msgstr "Entra, por favor"
+
+#: appweb/templates/users/login.html:58
+#, python-format
+msgid ""
+"If you don't have an account, please <a href=\"%(register_url)s\">register</"
+"a>"
+msgstr "Si no tienes una cuenta, <a href=\"%(register_url)s\">regístrate</a>"
+
+#: appweb/templates/users/logout.html:5
+msgid "Bye!"
+msgstr "¡Hasta pronto!"
+
+#: appweb/templates/users/register.html:45
+msgid "Please register"
+msgstr "Regístrate"
+
+#: appweb/templates/users/register.html:51
+msgid "Create"
+msgstr "Crear"
+
+#: appweb/templates/users/register.html:57
+#, python-format
+msgid "If you have an account, please <a href=\"%(login_url)s\">login</a>"
+msgstr "Si ya tienes una cuenta, <a href=\"%(login_url)s\">entra</a> con ella"
+
+#: appweb/views.py:33
+msgid "Logged out"
+msgstr "Desconectado"

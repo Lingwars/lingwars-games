@@ -1,6 +1,7 @@
 
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.views.generic import RedirectView
 
 from .views import login, logout, home, register
 
@@ -11,8 +12,10 @@ admin.site.index_title = 'Lingwargs | Games'
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^i18n/', include('django.conf.urls.i18n')),
 
-    url(r'^$', home, name='home'),
+    #url(r'^$', home, name='home'),
+    url(r'^$', RedirectView.as_view(permanent=False, pattern_name='games'), name='home'),
     url(r'^login/$', login, name='login'),
     url(r'^logout/$', logout, name='logout'),
     url(r'^register/$', register, name='register'),
