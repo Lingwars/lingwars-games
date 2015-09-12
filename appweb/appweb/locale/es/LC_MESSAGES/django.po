@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-11 12:03+0000\n"
+"POT-Creation-Date: 2015-09-12 08:21+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,23 +22,23 @@ msgstr ""
 msgid "Toggle navigation"
 msgstr "Cambiar navegación"
 
-#: appweb/templates/base.html:44
+#: appweb/templates/base.html:62
 msgid "logout"
 msgstr "salir"
 
-#: appweb/templates/base.html:56 appweb/templates/users/login.html:52
+#: appweb/templates/base.html:73 appweb/templates/users/login.html:52
 msgid "Sign in"
 msgstr "Entrar"
 
-#: appweb/templates/base.html:57
+#: appweb/templates/base.html:74
 msgid "Register"
 msgstr "Registrarse"
 
-#: appweb/templates/base.html:63
+#: appweb/templates/base.html:81
 msgid "Games"
 msgstr "Juegos"
 
-#: appweb/templates/base.html:64
+#: appweb/templates/base.html:82
 msgid "More to come..."
 msgstr "Más en breve..."
 
@@ -57,13 +57,9 @@ msgstr "Entra, por favor"
 #: appweb/templates/users/login.html:58
 #, python-format
 msgid ""
-"\n"
-"                If you don't have an account, please <a href="
-"\"%(register_url)s\">register</a>.\n"
-"            "
-msgstr ""
-"\n"
-"Si no tienes una cuenta, <a href=\"%(register_url)s\">regístrate</a>."
+"If you don't have an account, please <a href=\"%(register_url)s\">register</"
+"a>"
+msgstr "Si no tienes una cuenta, <a href=\"%(register_url)s\">regístrate</a>"
 
 #: appweb/templates/users/logout.html:5
 msgid "Bye!"
@@ -79,14 +75,8 @@ msgstr "Crear"
 
 #: appweb/templates/users/register.html:57
 #, python-format
-msgid ""
-"\n"
-"                If you have an account, please <a href=\"%(login_url)s"
-"\">login</a>.\n"
-"            "
-msgstr ""
-"\n"
-"Si ya tienes una cuenta, <a href=\"%(login_url)s\">entra</a> con ella."
+msgid "If you have an account, please <a href=\"%(login_url)s\">login</a>"
+msgstr "Si ya tienes una cuenta, <a href=\"%(login_url)s\">entra</a> con ella"
 
 #: appweb/views.py:33
 msgid "Logged out"

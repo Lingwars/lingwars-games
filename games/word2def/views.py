@@ -91,8 +91,8 @@ class Word2DefQuestionView(QuestionView):
         # Tweet
         max_def_length = 140 - len(query.word) - len("► : \"\"\n -- via @lingwars")
         definition = query.definition if len(query.definition) <= max_def_length else u"%s..." % query.definition[:max_def_length-3]
-        tw_text = "► %s: \"%s\"\n -- via @lingwars" % (query.word.title(), definition)
-        tweet = mark_safe('<a href="https://twitter.com/intent/tweet?%s" target="_blank">%s</a>' % (urlencode({'text': tw_text}), _("Tweet")))
+        tw_text = u"► %s: \"%s\"\n -- via @lingwars" % (query.word.title(), definition)
+        tweet = mark_safe(u'<a href="https://twitter.com/intent/tweet?%s" target="_blank">%s</a>' % (urlencode({'text': tw_text.encode('utf-8')}), _("Tweet")))
 
         opts = [tweet]
         if self.request.user.is_authenticated:

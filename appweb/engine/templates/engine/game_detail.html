@@ -6,9 +6,7 @@
             {{ game.title }}
             {% if game.author %}
                 <small>
-                    {% blocktrans with author=game.author %}
-                    by {{ author }}
-                    {% endblocktrans %}
+                    {% blocktrans with author=game.author %}by {{ author }}{% endblocktrans %}
                 </small>
             {% endif %}
         </h2>

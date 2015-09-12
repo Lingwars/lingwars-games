@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-11 12:03+0000\n"
+"POT-Creation-Date: 2015-09-12 08:21+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,23 +21,23 @@ msgstr ""
 msgid "Toggle navigation"
 msgstr ""
 
-#: appweb/templates/base.html:44
+#: appweb/templates/base.html:62
 msgid "logout"
 msgstr ""
 
-#: appweb/templates/base.html:56 appweb/templates/users/login.html:52
+#: appweb/templates/base.html:73 appweb/templates/users/login.html:52
 msgid "Sign in"
 msgstr ""
 
-#: appweb/templates/base.html:57
+#: appweb/templates/base.html:74
 msgid "Register"
 msgstr ""
 
-#: appweb/templates/base.html:63
+#: appweb/templates/base.html:81
 msgid "Games"
 msgstr ""
 
-#: appweb/templates/base.html:64
+#: appweb/templates/base.html:82
 msgid "More to come..."
 msgstr ""
 
@@ -56,10 +56,8 @@ msgstr ""
 #: appweb/templates/users/login.html:58
 #, python-format
 msgid ""
-"\n"
-"                If you don't have an account, please <a href="
-"\"%(register_url)s\">register</a>.\n"
-"            "
+"If you don't have an account, please <a href=\"%(register_url)s\">register</"
+"a>"
 msgstr ""
 
 #: appweb/templates/users/logout.html:5
@@ -76,11 +74,7 @@ msgstr ""
 
 #: appweb/templates/users/register.html:57
 #, python-format
-msgid ""
-"\n"
-"                If you have an account, please <a href=\"%(login_url)s"
-"\">login</a>.\n"
-"            "
+msgid "If you have an account, please <a href=\"%(login_url)s\">login</a>"
 msgstr ""
 
 #: appweb/views.py:33

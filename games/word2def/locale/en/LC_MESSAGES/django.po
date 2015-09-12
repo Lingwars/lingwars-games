@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-11 15:16+0200\n"
+"POT-Creation-Date: 2015-09-12 10:22+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,8 +37,7 @@ msgstr ""
 #: game.py:34
 msgid ""
 "This challenge is about word definitions. You have to choose the correct "
-"definition for the\n"
-"                    query word among several options."
+"definition for the query word among several options."
 msgstr ""
 
 #: templates/word2def/_answer_options.html:5
@@ -47,11 +46,12 @@ msgstr ""
 
 #: templates/word2def/game_detail.html:8
 msgid ""
-"\n"
-"                This challenge is about word definitions. You have to choose "
-"the correct definition for the\n"
-"                query word among several options.\n"
-"            "
+"This challenge is about word definitions. You have to choose the correct "
+"definition for the query word among several options"
+msgstr ""
+
+#: templates/word2def/savedword_list.html:6
+msgid "Saved words"
 msgstr ""
 
 #: views.py:81

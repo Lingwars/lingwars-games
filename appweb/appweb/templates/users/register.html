@@ -54,9 +54,7 @@
         <ol style="visibility:hidden;"></ol>
         {% url 'login' as login_url %}
         <p>
-            {% blocktrans %}
-                If you have an account, please <a href="{{ login_url }}">login</a>.
-            {% endblocktrans %}
+            {% blocktrans %}If you have an account, please <a href="{{ login_url }}">login</a>{% endblocktrans %}.
         </p>
     </form>
 {% endblock %}

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-11 12:03+0000\n"
+"POT-Creation-Date: 2015-09-12 08:21+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,27 +25,25 @@ msgstr ""
 msgid "Select your answer:"
 msgstr ""
 
-#: engine/templates/engine/base.html:6
-msgid "Games"
+#: engine/templates/engine/base.html:6 engine/templates/engine/home.html:6
+msgid "Challenges"
 msgstr ""
 
 #: engine/templates/engine/game_detail.html:9
+#: engine/templates/engine/home.html:20
 #, python-format
-msgid ""
-"\n"
-"                    by %(author)s\n"
-"                    "
+msgid "by %(author)s"
 msgstr ""
 
-#: engine/templates/engine/game_detail.html:17
+#: engine/templates/engine/game_detail.html:15
 msgid "details"
 msgstr ""
 
-#: engine/templates/engine/game_detail.html:18
+#: engine/templates/engine/game_detail.html:16
 msgid "play"
 msgstr ""
 
-#: engine/templates/engine/game_detail.html:19
+#: engine/templates/engine/game_detail.html:17
 msgid "ranking"
 msgstr ""
 
@@ -71,44 +69,20 @@ msgstr ""
 
 #: engine/templates/engine/game_ranking.html:28
 msgid ""
-"\n"
-"            *This ranking is temporal as we design a better ranking "
-"algorithm which takes into account\n"
-"            number of rounds and time since last play to compute score (<a "
-"href=\"https://github.com/jgsogo/lingwars-games/issues/1\">ideas?</a>).\n"
-"        "
+"This ranking is temporal as we design a better ranking algorithm which takes "
+"into account number of rounds and time since last play to compute score (<a "
+"href=\"https://github.com/jgsogo/lingwars-games/issues/1\">ideas?</a>)"
 msgstr ""
 
-#: engine/templates/engine/game_ranking.html:34
+#: engine/templates/engine/game_ranking.html:31
+msgid "Now it is implemented as: <strong>score = points/rounds</strong>"
+msgstr ""
+
+#: engine/templates/engine/home.html:9
 msgid ""
-"\n"
-"            Now it is implemented as: <strong>score = points/rounds</"
-"strong>.\n"
-"        "
-msgstr ""
-
-#: engine/templates/engine/home.html:6
-msgid "Challenges"
-msgstr ""
-
-#: engine/templates/engine/home.html:8
-msgid ""
-"\n"
-"        <p>\n"
-"            Here we are offering some challenges to test you. These games "
-"have been developed\n"
-"            by the <a href=\"http://lingwars.github.io/blog/\" target="
-"\"_blank\">Lingẅars</a> team.\n"
-"        </p>\n"
-"        "
-msgstr ""
-
-#: engine/templates/engine/home.html:23
-#, python-format
-msgid ""
-"\n"
-"                                    by %(author)s\n"
-"                                "
+"Here we are offering some challenges to test you. These games have been "
+"developed by the <a href=\"http://lingwars.github.io/blog/\" target=\"_blank"
+"\">Lingẅars</a> team"
 msgstr ""
 
 #: engine/utils/views.py:105
