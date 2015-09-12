@@ -41,13 +41,16 @@ class Game(GameBase):
 
     def populate_questions(self):
         log.info("Game.populate_questions()")
-        while True:
+        populate = True
+        while populate:
+            populate = False
             for i in range(self.LEVELS):
                 log.info(" - level %d" % i)
                 if len(self.question_pool[i]) < self.POOL_SIZE:
                     q, r = self._make_question(i, self.n_options)
                     self.question_pool[i].append((q, r))
                     log.info("\t%s" % q['query'])
+                    populate = True
             time.sleep(1)
 
     def make_question(self, level, *args, **kwargs):
