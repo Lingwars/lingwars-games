@@ -69,7 +69,7 @@ class Word2DefQuestionView(QuestionView):
         query = Definition.objects.get(word=response['options'][r][0])
         answer = Definition.objects.get(word=response['options'][int(u)][0])
 
-        user = self.request.user if self.request.user and self.request.user.is_authenticated else None
+        user = self.request.user if self.request.user and self.request.user.is_authenticated() else None
         instance = Question(user=user, query=query, answer=answer, level=question['level'])
         instance.options = def_options
         instance.save(force_insert=True)
