@@ -1,15 +1,17 @@
 from __future__ import division
 from __future__ import absolute_import
 
+import itertools
 from django.views.generic import DetailView, TemplateView
 from django.core.urlresolvers import reverse
 from django.utils import timezone
 from django.db.models import Sum, F, FloatField
 from django.shortcuts import redirect
 from django.contrib.auth import get_user_model
+from django.utils.safestring import mark_safe
 User = get_user_model()
 
-from .models import Game, Player
+from .models import Game, Player, PlayerScore
 from .utils.views import QuestionView, GameMixinView
 
 
@@ -18,6 +20,24 @@ class GameDetailView(GameMixinView, DetailView):
     def get_template_names(self):
         names = super(GameDetailView, self).get_template_names()
         return ['%s/game_detail.html' % self.object.id] + names
+
+    def get_context_data(self, **kwargs):
+        context = super(GameDetailView, self).get_context_data(**kwargs)
+
+        # Get stats by date-hour
+        # TODO: If only by date (just one call to db): http://stackoverflow.com/questions/2278076/count-number-of-records-by-date-in-django
+        # TODO: Dynamic zooming: https://github.com/kaliatech/dygraphs-dynamiczooming-example
+        qs = PlayerScore.objects.filter(player__game__pk=self.object.id).order_by('timestamp')
+        qs_anon = qs.filter(player__user__isnull=True).values_list('timestamp', flat=True)
+        qs_player = qs.filter(player__user__isnull=False).values_list('timestamp', flat=True)
+        def date_hour(timestamp):
+            return timestamp.strftime("%x %H:00")
+
+        game_stats_anon = [[group, len(list(matches))] for group, matches in itertools.groupby(qs_anon, lambda x: date_hour(x))]
+        game_stats_player = [[group, len(list(matches))] for group, matches in itertools.groupby(qs_player, lambda x: date_hour(x))]
+
+        context.update({'game_stats_anon': game_stats_anon, 'game_stats_player': game_stats_player})
+        return context
 
 
 class GameRankingView(GameMixinView, DetailView):
