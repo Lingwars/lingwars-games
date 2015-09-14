@@ -24,6 +24,7 @@ class GameDetailView(GameMixinView, DetailView):
     def get_context_data(self, **kwargs):
         context = super(GameDetailView, self).get_context_data(**kwargs)
 
+        """
         # Get stats by date-hour
         # TODO: If only by date (just one call to db): http://stackoverflow.com/questions/2278076/count-number-of-records-by-date-in-django
         # TODO: Dynamic zooming: https://github.com/kaliatech/dygraphs-dynamiczooming-example
@@ -37,6 +38,30 @@ class GameDetailView(GameMixinView, DetailView):
         game_stats_player = [[group, len(list(matches))] for group, matches in itertools.groupby(qs_player, lambda x: date_hour(x))]
 
         context.update({'game_stats_anon': game_stats_anon, 'game_stats_player': game_stats_player})
+        """
+
+        # Get stats by date-hour
+        #   If I have no data, no one has played!
+        # TODO: Time limits
+        qs = PlayerScore.objects.filter(player__game__pk=self.object.id).order_by('timestamp')
+        qs_anon = qs.filter(player__user__isnull=True).values_list('timestamp', flat=True)
+        qs_player = qs.filter(player__user__isnull=False).values_list('timestamp', flat=True)
+        def date_hour(timestamp):
+            return timestamp.strftime("%x %H:00")
+
+        game_stats_anon = {group: len(list(matches)) for group, matches in itertools.groupby(qs_anon, lambda x: date_hour(x))}
+        game_stats_player = {group: len(list(matches)) for group, matches in itertools.groupby(qs_player, lambda x: date_hour(x))}
+
+        print(game_stats_anon)
+        game_stats = []
+        t = qs.first().timestamp
+        last = qs.last().timestamp + timezone.timedelta(hours=1)
+        while t <= last:
+            key = date_hour(t)
+            game_stats.append([key, game_stats_anon.get(key, 0), game_stats_player.get(key, 0)])
+            t = t + timezone.timedelta(hours=1)
+
+        context.update({'game_stats': game_stats})
         return context
 
 

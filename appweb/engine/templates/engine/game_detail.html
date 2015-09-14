@@ -34,63 +34,13 @@
             <script src="{% static 'js/dygraph-combined.js' %}"></script>
             <script>
                 var drawGraphStats = function() {
-                    var game_stats_anon = [
-                        {% for item in game_stats_anon %}
-                            [new Date("{{ item.0 }}"), {{ item.1 }}],
+                    new Dygraph(document.getElementById("game-stats"),
+                        [
+                        {% for date,anon,player in game_stats %}
+                            [new Date("{{ date }}"), {{ anon }}, {{ player }}],
                         {% endfor %}
-                    ];
-
-                    var game_stats_player = [
-                        {% for item in game_stats_player %}
-                            [new Date("{{ item.0 }}"), {{ item.1 }}],
-                        {% endfor %}
-                    ];
-
-                    i_anon = 0;
-                    i_player = 0;
-                    data = [];
-                    for (;;) {
-                        var anon = game_stats_anon[i_anon];
-                        var player = game_stats_player[i_player];
-                        if (!anon && !player) {
-                            console.log("None of them. BREAK!");
-                            break;
-                        }
-                        if (anon && player) {
-                            console.log("Both of them");
-                            if (anon[0].getTime() < player[0].getTime()) {
-                                console.log("player.date > anon.date");
-                                data.push([anon[0], anon[1], null]);
-                                i_anon += 1;
-                            }
-                            else if(anon[0].getTime() > player[0].getTime()) {
-                                console.log("anon.date > player.date");
-                                data.push([player[0], null, player[1]]);
-                                i_player += 1;
-                            }
-                            else {
-                                console.log("anon.date == player.date");
-                                data.push([anon[0], anon[1], player[1]]);
-                                i_anon += 1;
-                                i_player += 1;
-                            }
-                        }
-                        else if (anon) {
-                            console.log("just anon");
-                            data.push([anon[0], anon[1], null]);
-                            i_anon += 1;
-                        }
-                        else if (player) {
-                            console.log("just player");
-                            data.push([player[0], null, player[1]]);
-                            i_player += 1;
-                        }
-                        else {
-                            //alert("Alert");
-                        }
-                    }
-
-                    new Dygraph(document.getElementById("game-stats"), data, {
+                        ],
+                        {
                         legend: 'always',
                         drawPoints: false,
                         showRoller: false,
