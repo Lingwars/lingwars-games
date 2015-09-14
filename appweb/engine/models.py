@@ -45,7 +45,7 @@ class Game(models.Model):
 
 @python_2_unicode_compatible
 class Player(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True)
     game = models.ForeignKey(Game)
 
     first_played = models.DateTimeField(auto_now_add=True)

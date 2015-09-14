@@ -1,5 +1,5 @@
 {% extends "engine/base.html" %}
-{% load i18n %}
+{% load i18n static %}
 
 {% block content_engine %}
         <h2>
@@ -22,4 +22,34 @@
                 <p>{{ game.description|default:"No description available." }}</p>
             {% endblock %}
         </div>
+
+        <h3>{% trans "Popularity" %}</h3>
+        <div class="col-xs-12">
+            <div id="game-stats"></div>
+        </div>
+
+{% endblock %}
+
+{% block extra_js %}
+            <script src="{% static 'js/dygraph-combined.js' %}"></script>
+            <script>
+                var drawGraphStats = function() {
+                    new Dygraph(document.getElementById("game-stats"),
+                        [
+                        {% for date,anon,player in game_stats %}
+                            [new Date("{{ date }}"), {{ anon }}, {{ player }}],
+                        {% endfor %}
+                        ],
+                        {
+                        legend: 'always',
+                        drawPoints: false,
+                        showRoller: false,
+                        labels: ['{% trans "Date" %}', '{% trans "Anonymous" %}', '{% trans "Registered" %}']
+                    });
+                };
+
+                $(document).ready(function(){
+                    drawGraphStats();
+                });
+            </script>
 {% endblock %}

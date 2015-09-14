@@ -81,10 +81,9 @@ class QuestionView(GameMixinView, TemplateView):
         response = data['response']
         score = self.score(question, response, request.POST)
 
-        if request.user and request.user.is_authenticated():
-            player, created = Player.objects.get_or_create(user=request.user, game=self.object)
-            PlayerScore.objects.create(player=player, score=score)
-            player.touch()
+        player, created = Player.objects.get_or_create(user=request.user if request.user.is_authenticated() else None, game=self.object)
+        PlayerScore.objects.create(player=player, score=score)
+        player.touch()
 
         redirect_url = reverse('game_play', kwargs={'pk': self.object.pk})
         return redirect(redirect_url)
