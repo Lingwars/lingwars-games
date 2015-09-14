@@ -20,13 +20,14 @@
         <div>
             {% block content_game %}
                 <p>{{ game.description|default:"No description available." }}</p>
+
+                <h3>{% trans "Popularity" %}</h3>
+                <div class="col-xs-12">
+                    <div id="game-stats"></div>
+                </div>
             {% endblock %}
         </div>
 
-        <h3>{% trans "Popularity" %}</h3>
-        <div class="col-xs-12">
-            <div id="game-stats"></div>
-        </div>
 
 {% endblock %}
 
