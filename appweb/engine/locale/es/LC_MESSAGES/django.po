@@ -54,7 +54,7 @@ msgstr "Popularidad"
 
 #: engine/templates/engine/game_detail.html:30
 msgid "Number of rounds played by registered and anonymous users"
-msgstr "Numero de rondas jugadas por usuarios registrados y anonimos"
+msgstr "Número de rondas jugadas por usuarios registrados y anónimos"
 
 #: engine/templates/engine/game_detail.html:54
 msgid "Date"
@@ -62,7 +62,7 @@ msgstr "Fecha"
 
 #: engine/templates/engine/game_detail.html:54
 msgid "Anonymous"
-msgstr "Anonimos"
+msgstr "Anónimos"
 
 #: engine/templates/engine/game_detail.html:54
 msgid "Registered"
