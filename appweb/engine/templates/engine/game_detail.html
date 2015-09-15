@@ -14,10 +14,17 @@
             {% block game_menu %}
             <ul class="nav nav-tabs">
                 {% url 'game_detail' game.id as url_detail %}
-                {% url 'game_play' game.id as url_play %}
+                {% url game.id|add:":play" as url_play %}
+                {% if not url_play %}
+                    {% url 'game_play' game.id as url_play %}
+                {% endif %}
                 {% url 'game_ranking' game.id as url_ranking %}
                 <li role="presentation" class="{% active url_detail %}"><a href="{{ url_detail }}">{% trans "Details" %}</a></li>
-                <li role="presentation" class="{% active url_play %}"><a href="{{ url_play }}">{% trans "Play" %}</a></li>
+                <li role="presentation" class="{% active url_play %}">
+                    <a href="{{ url_play }}">
+                        <span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span> {% trans "Play" %}
+                    </a>
+                </li>
                 <li role="presentation" class="{% active url_ranking %}"><a href="{{ url_ranking }}">{% trans "Ranking" %}</a></li>
             </ul>
             {% endblock %}
