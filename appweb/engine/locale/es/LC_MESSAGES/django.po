@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-12 08:21+0000\n"
+"POT-Creation-Date: 2015-09-15 13:34+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -34,19 +34,39 @@ msgstr "Retos"
 #: engine/templates/engine/home.html:20
 #, python-format
 msgid "by %(author)s"
-msgstr ""
+msgstr "%(author)s"
 
-#: engine/templates/engine/game_detail.html:15
-msgid "details"
-msgstr "detalles"
+#: engine/templates/engine/game_detail.html:19
+msgid "Details"
+msgstr "Detalles"
 
-#: engine/templates/engine/game_detail.html:16
-msgid "play"
-msgstr "jugar"
+#: engine/templates/engine/game_detail.html:20
+msgid "Play"
+msgstr "Jugar"
 
-#: engine/templates/engine/game_detail.html:17
-msgid "ranking"
-msgstr "clasificación"
+#: engine/templates/engine/game_detail.html:21
+msgid "Ranking"
+msgstr "Clasificación"
+
+#: engine/templates/engine/game_detail.html:29
+msgid "Popularity"
+msgstr "Popularidad"
+
+#: engine/templates/engine/game_detail.html:30
+msgid "Number of rounds played by registered and anonymous users"
+msgstr "Número de rondas jugadas por usuarios registrados y anónimos"
+
+#: engine/templates/engine/game_detail.html:54
+msgid "Date"
+msgstr "Fecha"
+
+#: engine/templates/engine/game_detail.html:54
+msgid "Anonymous"
+msgstr "Anónimos"
+
+#: engine/templates/engine/game_detail.html:54
+msgid "Registered"
+msgstr "Registrados"
 
 #: engine/templates/engine/game_play.html:9
 msgid "Question"
@@ -93,10 +113,11 @@ msgstr ""
 "desarrollados por el equipo de <a href=\"http://lingwars.github.io/blog/\" "
 "target=\"_blank\">Lingẅars</a>"
 
-#: engine/utils/views.py:105
+#: engine/utils/views.py:104
 msgid "Well done"
 msgstr "¡Bien!"
 
-#: engine/utils/views.py:109
+#: engine/utils/views.py:108
 msgid "Error"
 msgstr "Error"
+

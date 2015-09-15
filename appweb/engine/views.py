@@ -55,7 +55,7 @@ class GameDetailView(GameMixinView, DetailView):
         print(game_stats_anon)
         game_stats = []
         t = qs.first().timestamp
-        last = qs.last().timestamp + timezone.timedelta(hours=1)
+        last = timezone.now() + timezone.timedelta(hours=1)
         while t <= last:
             key = date_hour(t)
             game_stats.append([key, game_stats_anon.get(key, 0), game_stats_player.get(key, 0)])
