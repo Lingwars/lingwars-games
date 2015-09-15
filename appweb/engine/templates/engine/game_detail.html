@@ -1,5 +1,5 @@
 {% extends "engine/base.html" %}
-{% load i18n static %}
+{% load i18n static appweb %}
 
 {% block content_engine %}
         <h2>
@@ -12,9 +12,14 @@
         </h2>
         <p>
             {% block game_menu %}
-            <a href="{% url 'game_detail' game.id %}">{% trans "details" %}</a>
-            | <a href="{% url 'game_play' game.id %}">{% trans "play" %}</a>
-            | <a href="{% url 'game_ranking' game.id %}">{% trans "ranking" %}</a>
+            <ul class="nav nav-tabs">
+                {% url 'game_detail' game.id as url_detail %}
+                {% url 'game_play' game.id as url_play %}
+                {% url 'game_ranking' game.id as url_ranking %}
+                <li role="presentation" class="{% active url_detail %}"><a href="{{ url_detail }}">{% trans "Details" %}</a></li>
+                <li role="presentation" class="{% active url_play %}"><a href="{{ url_play }}">{% trans "Play" %}</a></li>
+                <li role="presentation" class="{% active url_ranking %}"><a href="{{ url_ranking }}">{% trans "Ranking" %}</a></li>
+            </ul>
             {% endblock %}
         </p>
         <div>
@@ -22,6 +27,7 @@
                 <p>{{ game.description|default:"No description available." }}</p>
 
                 <h3>{% trans "Popularity" %}</h3>
+                <p>{% trans "Number of rounds played by registered and anonymous users" %}:</p>
                 <div class="col-xs-12">
                     <div id="game-stats"></div>
                 </div>
